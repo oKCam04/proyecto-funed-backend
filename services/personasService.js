@@ -9,12 +9,13 @@ class PersonasService {
             console.log("Error en servicio")
         }
     }
-    static async crearPersona(nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo) {
+    static async crearPersona(nombre, apellido, numeroIdentificacion, tipoIdentificacion, fechaNacimiento, telefono, correo) {
         try{
-            return await personas.create({nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo})
+            return await personas.create({nombre, apellido, numeroIdentificacion , tipoIdentificacion, fechaNacimiento, telefono, correo})
         }
         catch (error){
             console.log("Error en servicio al crear persona")
+            console.log(error);
         }
         }
     static async actualizarPersona(id, nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo) {

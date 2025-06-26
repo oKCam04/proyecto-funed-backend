@@ -11,9 +11,9 @@ class PersonasController {
     }
 
     static async crearPersona(req, res) {
-        const { nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo } = req.body;
+        const { nombre, apellido, numeroIdentificacion, tipoIdentificacion, fechaNacimiento, telefono, correo } = req.body;
         try {
-            const nuevaPersona = await PersonasService.crearPersona(nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo);
+            const nuevaPersona = await PersonasService.crearPersona(nombre, apellido, numeroIdentificacion, tipoIdentificacion, fechaNacimiento, telefono, correo);
             res.json(nuevaPersona);
         } catch (error) {
             res.json({ message: "Error al crear persona" });

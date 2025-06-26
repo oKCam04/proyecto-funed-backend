@@ -19,7 +19,12 @@ app.use(express.json());
 
 //ruta
  const personasRouter=require('./router/personasRouter');
+ const cursosRouter=require('./router/cursosRouter');
+ const docentesRouter=require('./router/docenteRouter');
  app.use('/api/',personasRouter);
+ app.use('/api/',cursosRouter);
+ app.use('/api/',docentesRouter);
+ 
 
 
 
