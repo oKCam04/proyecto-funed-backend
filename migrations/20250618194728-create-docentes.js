@@ -11,7 +11,11 @@ module.exports = {
       },
       idPersona: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'personas', 
+          key: 'id'
+        },
       },
       especialidad: {
         type: Sequelize.STRING,

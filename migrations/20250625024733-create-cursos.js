@@ -9,44 +9,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idDocente: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'docentes', 
-          key: 'id' 
-        },
-      },
       nombreCurso: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      inicio: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      finalizacion: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
       duracion: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
       },
       temario: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
-      inscripcion: {
-        type: Sequelize.DECIMAL,
-        allowNull: false
-      },
-      valorTotal: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      grupo: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
         allowNull: false
       },
       tipoCurso: {

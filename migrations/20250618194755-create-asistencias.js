@@ -9,9 +9,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idEstudiante: {
+      idPersonas: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: 'personas', 
+          key: 'id'
+        }
       },
       fecha: {
         type: Sequelize.STRING,

@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Personas', {
+    await queryInterface.createTable('personas', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -38,6 +38,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      rol: {
+        type: Sequelize.ENUM('admin', 'usuario', 'docente'),
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -49,6 +52,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Personas');
+    await queryInterface.dropTable('personas');
   }
 };

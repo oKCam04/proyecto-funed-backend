@@ -12,10 +12,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idEstudiante: {
+      idPersona: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+          model: 'personas',
+          key: 'id' 
+        }
       },
+
       fechaEmision: {
         type: DataTypes.STRING,
         allowNull: false

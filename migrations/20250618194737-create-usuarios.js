@@ -11,7 +11,11 @@ module.exports = {
       },
       idPersona: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'personas', 
+          key: 'id' 
+        },
       },
       nombreUsuario: {
         type: Sequelize.STRING,
@@ -21,6 +25,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
 
+      },
+      fechaCreacion:{
+        type: Sequelize.DATE,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
