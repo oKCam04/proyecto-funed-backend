@@ -2,28 +2,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('asistencias', {
+    await queryInterface.createTable('cursoResultados', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idPersonas: {
+      idCursosMatriculados: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        references: {
+          model: 'cursoMatriculados', 
+          key: 'id'
+        }
+      },
+      idPersona: {
+        type: Sequelize.INTEGER,
         references: {
           model: 'personas', 
           key: 'id'
         }
       },
-      fecha: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      asistio: {
-        type: Sequelize.ENUM('Si', 'No'),
-        allowNull: false
+      resultado: {
+        type: Sequelize.ENUM('Aprobado', 'Reprobado', 'En Proceso')
       },
       createdAt: {
         allowNull: false,
@@ -36,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('asistencias');
+    await queryInterface.dropTable('cursoResultados');
   }
 };

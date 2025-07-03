@@ -1,33 +1,30 @@
-const {cursos,docentes} = require('../models');
+const {curso} = require('../models');
 
-class CursosService {
+class cursosService {
     static async listarCursos() {
         try {
-            return await cursos.findAll(
-                {include:{model: docentes,as: 'docentes', attributes:['especialidad']}}
-            );
-            
+            return await curso.findAll();
         } catch (error) {
             console.log("Error en servicio al listar cursos");
         }
     }
 
-    static async crearCurso(idDocente, nombreCurso, inicio, finalizacion, duracion, temario, inscripcion, valorTotal, grupo, tipoCurso) {
+    static async crearCurso(nombreCurso, duracion, temario, tipoCurso) {
         try {
-            return await cursos.create({ idDocente, nombreCurso, inicio, finalizacion, duracion, temario, inscripcion, valorTotal, grupo, tipoCurso });
+            return await curso.create({ nombreCurso, duracion, temario, tipoCurso });
         } catch (error) {
             console.log("Error en servicio al crear curso");
-            console.log(error);
+            
         }
     }
 
-    static async actualizarCurso(id, idDocente, nombreCurso, inicio, finalizacion, duracion, temario, inscripcion, valorTotal, grupo, tipoCurso) {
+    static async actualizarCurso(id, nombreCurso, duracion, temario, tipCurso) {
         try {
-            const curso = await cursos.findByPk(id);
-            if (!curso) {
+            const cursoEncontrado = await curso.findByPk(id);
+            if (!cursoEncontrado) {
                 throw new Error('Curso no encontrado');
             }
-            return await curso.update({ idDocente, nombreCurso, inicio, finalizacion, duracion, temario, inscripcion, valorTotal, grupo, tipoCurso});
+            return await cursoEncontrado.update({ nombreCurso, duracion, temario, tipCurso });
         } catch (error) {
             console.log("Error en servicio al actualizar curso");
         }
@@ -35,14 +32,14 @@ class CursosService {
 
     static async eliminarCurso(id) {
         try {
-            const curso = await cursos.findByPk(id);
-            if (!curso) {
+            const cursoEncontrado = await curso.findByPk(id);
+            if (!cursoEncontrado) {
                 throw new Error('Curso no encontrado');
             }
-            return await curso.destroy();
+            return await cursoEncontrado.destroy();
         } catch (error) {
             console.log("Error en servicio al eliminar curso");
         }
     }
-}
-module.exports = CursosService;
+ }
+module.exports = cursosService;

@@ -1,34 +1,26 @@
 'use strict';
-
-const { DataTypes } = require('sequelize');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('certificados', {
+    await queryInterface.createTable('asistencia', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idPersona: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      idCursosMatriculados: {
+        type: Sequelize.INTEGER,
         references: {
-          model: 'personas',
-          key: 'id' 
+          model: 'cursoMatriculados', 
+          key: 'id'
         }
       },
-
-      fechaEmision: {
-        type: DataTypes.STRING,
-        allowNull: false
+      asistio: {
+        type: Sequelize.ENUM('Si', 'No')
       },
-      urlCertifcado: {
-        type: DataTypes.STRING,
-        allowNull: false
-
+      fecha: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -41,6 +33,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('certificados');
+    await queryInterface.dropTable('asistencia');
   }
 };

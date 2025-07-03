@@ -1,38 +1,41 @@
-const {personas}=require('../models');
+const {persona}=require('../models');
 
 class PersonasService {
     static async listarPersonas() {
         try {
-            const personasList = await personas.findAll();
+            const personasList = await persona.findAll();
             return personasList;
         } catch (error) {
             console.log("Error en servicio")
+            
         }
     }
-    static async crearPersona(nombre, apellido, numeroIdentificacion, tipoIdentificacion, fechaNacimiento, telefono, correo) {
+    static async crearPersona(nombre, apellido, numeroIdentificacion, tipoIdentificacion, fechaNacimiento, telefono, correo, rol) {
         try{
-            return await personas.create({nombre, apellido, numeroIdentificacion , tipoIdentificacion, fechaNacimiento, telefono, correo})
+            return await persona.create({nombre, apellido, numeroIdentificacion , tipoIdentificacion, fechaNacimiento, telefono, correo, rol})
         }
         catch (error){
             console.log("Error en servicio al crear persona")
-            console.log(error);
+            
         }
         }
-    static async actualizarPersona(id, nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo) {
+    static async actualizarPersona(id, nombre, apellido, numeroIdentificacion, tipo, fecha, telefono, correo, rol) {
         try {
-            const persona = await personas.findByPk(id);
+            const persona = await persona.findByPk(id);
             if (!persona) {
                 throw new Error('Persona no encontrada');
             }
-            return await persona.update({ nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo });
+            return await persona.update({ nombre, apellido, numeroIdentificacion, tipo, fecha, telefono, correo, rol });
         } catch (error) {
             console.log("Error en servicio al actualizar persona")
+            console.log(error);
         }
     }
     static async eliminarPersona(id) {
         try {
-            const persona = await personas.findByPk(id);
+            const persona = await persona.findByPk(id);
             if (!persona) {
+                
                 throw new Error('Persona no encontrada');
             }
             return await persona.destroy();
