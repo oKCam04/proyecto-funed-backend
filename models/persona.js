@@ -44,11 +44,11 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     apellido: DataTypes.STRING,
     numeroIdentificacion: DataTypes.STRING,
-    tipoIdentificacion: DataTypes.STRING,
+    tipoIdentificacion: DataTypes.ENUM('Cédula','Tarjeta de identidad'),
     fechaNacimiento: DataTypes.DATE,
     telefono: DataTypes.STRING,
     correo: DataTypes.STRING,
-    rol: DataTypes.STRING
+    rol: DataTypes.ENUM('Administrador', 'Usuario','Estudiante')
   }, {
     sequelize,
     modelName: 'persona',

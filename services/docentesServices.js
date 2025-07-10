@@ -1,9 +1,9 @@
-const {docentes} = require('../models');
+const {docente} = require('../models');
 
 class DocentesService {
     static async listarDocentes() {
         try {
-            return await docentes.findAll();
+            return await docente.findAll();
         } catch (error) {
             console.log("Error en servicio al listar docentes");
             
@@ -12,7 +12,7 @@ class DocentesService {
 
     static async crearDocente(idPersona, especialidad, fechaContratacion, fechaTerminacion) {
         try {
-            return await docentes.create({ idPersona, especialidad, fechaContratacion, fechaTerminacion });
+            return await docente.create({ idPersona, especialidad, fechaContratacion, fechaTerminacion });
         } catch (error) {
             console.log("Error en servicio al crear docente");
         }
@@ -20,7 +20,7 @@ class DocentesService {
 
     static async actualizarDocente(id, idPersona, especialidad, fechaContratacion, fechaTerminacion) {
         try {
-            const docente = await docentes.findByPk(id);
+            const docente = await docente.findByPk(id);
             if (!docente) {
                 throw new Error('Docente no encontrado');
             }
@@ -32,8 +32,8 @@ class DocentesService {
 
     static async eliminarDocente(id) {
         try {
-            const docente = await docentes.findByPk(id);
-            if (!docente) {
+            const docentes = await docente.findByPk(id);
+            if (!docentes) {
                 throw new Error('Docente no encontrado');
             }
             return await docente.destroy();

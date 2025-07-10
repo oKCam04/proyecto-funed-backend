@@ -23,8 +23,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   inscripcion.init({
     idOfertaCurso: DataTypes.INTEGER,
-    titulo: DataTypes.INTEGER,
-    ofertas: DataTypes.TEXT,
     fechaInicioInscripcion: DataTypes.DATE,
     fechaFinInscripcion: DataTypes.DATE,
     personaInscrita: DataTypes.INTEGER

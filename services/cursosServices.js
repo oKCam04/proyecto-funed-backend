@@ -41,5 +41,17 @@ class cursosService {
             console.log("Error en servicio al eliminar curso");
         }
     }
+    static async buscarCursoPorId(id) {
+        try {
+            const cursoEncontrado = await curso.findByPk(id);
+            if (!cursoEncontrado) {
+                throw new Error('Curso no encontrado');
+            }
+            return cursoEncontrado;
+        } catch (error) {
+            console.log("Error en servicio al buscar curso por ID");
+            
+        }
+    }
  }
 module.exports = cursosService;

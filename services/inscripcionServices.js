@@ -1,18 +1,22 @@
-const {inscripcion} = require('../models');
+const {inscripcion,persona, ofertaCurso} = require('../models');
 
 class InscripcionService {
     static async listarInscripciones() {
         try {
-            return await inscripcion.findAll();
+            return await inscripcion.findAll({
+                include:[{model:persona, as: 'persona', attributes:['id']}, 
+                {model: ofertaCurso, as: 'ofertaCurso',attributes:['codigoCurso']}],
+            });
         } catch (error) {
             console.log("Error en servicio al listar inscripciones");
         }
     }
 
-    static async crearInscripcion(idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita) {
+    static async crearInscripcion(idOfertaCurso, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita) {
         try {
-            return await inscripcion.create({ idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita });
+            return await inscripcion.create({ idOfertaCurso, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita });
         } catch (error) {
+            console.log(error);
             console.log("Error en servicio al crear inscripcion");
         }
     }

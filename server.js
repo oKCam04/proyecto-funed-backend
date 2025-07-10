@@ -18,12 +18,18 @@ app.use(cors({
 app.use(express.json());
 
 //ruta
- const personasRouter=require('./router/personasRouter');
- const cursosRouter=require('./router/cursosRouter');
- const docentesRouter=require('./router/docenteRouter');
- app.use('/api/',personasRouter);
- app.use('/api/',cursosRouter);
- app.use('/api/',docentesRouter);
+    const personasRouter=require('./router/personasRouter');
+    const cursosRouter=require('./router/cursosRouter');
+    const docentesRouter=require('./router/docenteRouter');
+    const ofertaCursosRouter=require('./router/ofertaCursosRouter');
+    const docenteRouter=require('./router/docenteRouter');
+    const inscripcionRouter=require('./router/inscripcionRouter');
+    app.use('/api/',personasRouter);
+    app.use('/api/',cursosRouter);
+    app.use('/api/',docentesRouter);
+    app.use('/api/',ofertaCursosRouter);
+    app.use('/api/',docenteRouter);
+    app.use('/api/',inscripcionRouter);
  
 
 

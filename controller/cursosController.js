@@ -40,5 +40,14 @@ class CursosController {
             res.json({ message: "Error al eliminar curso" });
         }
     }
+    static async buscarCursoPorId(req, res) {
+        const { id } = req.params;
+        try {
+            const cursoEncontrado = await CursosService.buscarCursoPorId(id);
+            res.json(cursoEncontrado);
+        } catch (error) {
+            res.json({ message: "Error al buscar curso por ID" });
+        }
+    }
 }
 module.exports = CursosController;

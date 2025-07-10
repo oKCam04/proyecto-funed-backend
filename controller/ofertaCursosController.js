@@ -11,9 +11,9 @@ class OfertaCursosController {
     }
 
     static async crearOfertaCurso(req, res) {
-        const { titulo, descripcion, fechaInicio, fechaFin, estado } = req.body;
+        const { codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente } = req.body;
         try {
-            const nuevaOfertaCurso = await ofertaCursosService.crearOfertaCurso(titulo, descripcion, fechaInicio, fechaFin, estado);
+            const nuevaOfertaCurso = await ofertaCursosService.crearOfertaCurso(codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente);
             res.status(201).json(nuevaOfertaCurso);
         } catch (error) {
             res.status(500).json({ message: "Error al crear oferta de curso" });
@@ -22,9 +22,9 @@ class OfertaCursosController {
 
     static async actualizarOfertaCurso(req, res) {
         const { id } = req.params;
-        const { titulo, descripcion, fechaInicio, fechaFin, estado } = req.body;
+        const { codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente } = req.body;
         try {
-            const ofertaCursoActualizada = await ofertaCursosService.actualizarOfertaCurso(id, titulo, descripcion, fechaInicio, fechaFin, estado);
+            const ofertaCursoActualizada = await ofertaCursosService.actualizarOfertaCurso(id, codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente);
             res.json(ofertaCursoActualizada);
         } catch (error) {
             res.status(500).json({ message: "Error al actualizar oferta de curso" });

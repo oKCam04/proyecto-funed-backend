@@ -11,9 +11,9 @@ class InscripcionController {
     }
 
     static async crearInscripcion(req, res) {
-        const { idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita } = req.body;
+        const { idOfertaCurso, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita} = req.body;
         try {
-            const nuevaInscripcion = await inscripcionService.crearInscripcion(idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita);
+            const nuevaInscripcion = await inscripcionService.crearInscripcion(idOfertaCurso, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita);
             res.json(req.body);
         } catch (error) {
             res.json({ message: "Error al crear inscripción" });
@@ -22,9 +22,9 @@ class InscripcionController {
 
     static async actualizarInscripcion(req, res) {
         const { id } = req.params;
-        const { idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita } = req.body;
+        const { idOfertaCurso, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita } = req.body;
         try {
-            const inscripcionActualizada = await inscripcionService.actualizarInscripcion(id, idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita);
+            const inscripcionActualizada = await inscripcionService.actualizarInscripcion(id, idOfertaCurso, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita);
             res.json(inscripcionActualizada);
         } catch (error) {
             res.json({ message: "Error al actualizar inscripción" });

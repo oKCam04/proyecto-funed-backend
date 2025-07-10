@@ -1,27 +1,30 @@
-const {ofertaCurso} =require('../models');
+const {ofertaCurso, docente, curso} =require('../models');
 
 class OfertaCursoService {
     static async listarOfertasCursos() {
         try {
-            return await ofertaCurso.findAll();
+            return await ofertaCurso.findAll({include: [
+                {model: docente, as: 'docente', attributes: ['id']},
+                {model: curso, as: 'curso', attributes: ['id', 'nombreCurso']}
+            ]});
         } catch (error) {
             throw new Error("Error al listar ofertas de cursos: " + error.message);
         }
     }
 
-    static async crearOfertaCurso(titulo, descripcion, fechaInicio, fechaFin, estado) {
+    static async crearOfertaCurso(codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente) {
         try {
-            return await ofertaCurso.create({ titulo, descripcion, fechaInicio, fechaFin, estado });
+            return await ofertaCurso.create({ codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente });
         } catch (error) {
             throw new Error("Error al crear oferta de curso: " + error.message);
         }
     }
 
-    static async actualizarOfertaCurso(id, titulo, descripcion, fechaInicio, fechaFin, estado) {
+    static async actualizarOfertaCurso(id, codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente) {
         try {
             const oferta = await ofertaCurso.findByPk(id);
             if (!oferta) throw new Error("Oferta de curso no encontrada");
-            return await oferta.update({ titulo, descripcion, fechaInicio, fechaFin, estado });
+            return await oferta.update({ codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente });
         } catch (error) {
             throw new Error("Error al actualizar oferta de curso: " + error.message);
         }

@@ -6,5 +6,6 @@ router.get("/cursos", cursosRouter.listarCursos);
 router.post("/cursos", cursosRouter.crearCurso);
 router.put("/cursos/:id", cursosRouter.actualizarCurso);
 router.delete("/cursos/:id", cursosRouter.eliminarCurso);
+router.get("/cursos/:id", cursosRouter.buscarCursoPorId);
 
 module.exports = router;

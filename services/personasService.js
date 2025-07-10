@@ -15,17 +15,18 @@ class PersonasService {
             return await persona.create({nombre, apellido, numeroIdentificacion , tipoIdentificacion, fechaNacimiento, telefono, correo, rol})
         }
         catch (error){
+            console.log(error);
             console.log("Error en servicio al crear persona")
             
         }
         }
     static async actualizarPersona(id, nombre, apellido, numeroIdentificacion, tipo, fecha, telefono, correo, rol) {
         try {
-            const persona = await persona.findByPk(id);
-            if (!persona) {
+            const personas = await persona.findByPk(id);
+            if (!personas) {
                 throw new Error('Persona no encontrada');
             }
-            return await persona.update({ nombre, apellido, numeroIdentificacion, tipo, fecha, telefono, correo, rol });
+            return await personas.update({ nombre, apellido, numeroIdentificacion, tipo, fecha, telefono, correo, rol });
         } catch (error) {
             console.log("Error en servicio al actualizar persona")
             console.log(error);

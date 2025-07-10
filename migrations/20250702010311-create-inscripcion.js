@@ -16,12 +16,6 @@ module.exports = {
           key: 'id'
         }
       },
-      titulo: {
-        type: Sequelize.INTEGER
-      },
-      ofertas: {
-        type: Sequelize.TEXT
-      },
       fechaInicioInscripcion: {
         type: Sequelize.DATE
       },
