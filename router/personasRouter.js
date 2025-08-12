@@ -6,5 +6,6 @@ router.get("/personas", PersonasRouter.listarPersonas);
 router.post("/personas", PersonasRouter.crearPersona);
 router.put("/personas/:id", PersonasRouter.actualizarPersona);
 router.delete("/personas/:id", PersonasRouter.eliminarPersona);
+router.get("/personas/:id", PersonasRouter.buscarPersonaPorId);
 
 module.exports = router;

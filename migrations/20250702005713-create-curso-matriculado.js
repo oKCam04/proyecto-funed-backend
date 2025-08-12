@@ -1,4 +1,7 @@
 'use strict';
+
+const { sequelize } = require('../models');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -9,10 +12,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idCurso: {
+      idCursoOferta: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'cursos', 
+          model: 'ofertaCursos', 
           key: 'id'
         }
       },
@@ -22,6 +25,12 @@ module.exports = {
           model: 'personas', 
           key: 'id'
         }
+      },
+      estado:{
+        type:Sequelize.ENUM('PreInscrito','Matriculado','Cancelado','Finalizado'),defaultValue:'PreInscrito',
+      },
+      resultado:{
+        type:Sequelize.ENUM('Aprobado','Reprobado','Pendiente'),defaultValue:'Pendiente',
       },
       createdAt: {
         allowNull: false,

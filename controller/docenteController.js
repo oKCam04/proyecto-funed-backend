@@ -38,7 +38,7 @@ class DocenteController {
         const { id } = req.params;
         try {
             await docenteService.eliminarDocente(id);
-            res.status(204).send();
+            res.status(204).json({ message: "Docente eliminado correctamente" });
         } catch (error) {
             console.error("Error al eliminar docente:", error);
             res.status(500).json({ message: "Error al eliminar docente" });

@@ -9,10 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idPersona: {
+      idCursoMatriculado: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'personas', 
+          model: 'cursoMatriculados', 
           key: 'id'
         }
       },

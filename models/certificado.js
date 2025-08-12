@@ -11,14 +11,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      certificado.belongsTo(models.persona, {
-        foreignKey: 'idPersona',
-        as: 'persona'
+      certificado.belongsTo(models.cursoMatriculado, {
+        foreignKey: 'idCursoMatriculado',
+        as: 'matricula'
       });
     }
   }
   certificado.init({
-    idPersona: DataTypes.INTEGER,
+    idCursoMatriculado: DataTypes.INTEGER,
     fechaEmision: DataTypes.DATE,
     urlCertificado: DataTypes.STRING
   }, {

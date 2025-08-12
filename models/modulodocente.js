@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     idModulo: DataTypes.INTEGER,
     idDocente: DataTypes.INTEGER,
     idCurosMatriculados: DataTypes.INTEGER,
+    resultado: DataTypes.ENUM('Aprobado', 'Reprobado', 'Pendiente')
   }, {
     sequelize,
     modelName: 'moduloDocente',

@@ -44,6 +44,18 @@ class PersonasService {
             console.log("Error en servicio al eliminar persona")
         }
     }
+    static async buscarPersonaPorId(id) {
+        try {
+            const personaEncontrada = await persona.findByPk(id);
+            if (!personaEncontrada) {
+                throw new Error('Persona no encontrada');
+            }
+            return personaEncontrada;
+        } catch (error) {
+            console.log("Error en servicio al buscar persona por ID");
+            console.log(error);
+        }
+    }
 }
 
 module.exports = PersonasService;

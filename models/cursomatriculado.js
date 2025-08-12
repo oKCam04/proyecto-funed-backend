@@ -19,14 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'idPersona',
         as: 'persona'
       });
-      cursoMatriculado.hasMany(models.cursoResultado, {
-        foreignKey: 'idCursosMatriculados',
-        as: 'resultados'
-      });
-      cursoMatriculado.hasMany(models.notaModulo, {
-        foreignKey: 'idCursoMatriculado',
-        as: 'notasModulo'
-      })
       cursoMatriculado.hasMany(models.pago, {
         foreignKey: 'idCursosMatriculados',
         as: 'pagos'
@@ -39,11 +31,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'idCurosMatriculados',
         as: 'modulosDocente'
       })
+      cursoMatriculado.hasMany(models.certificado, {
+        foreignKey: 'idCursoMatriculado',
+        as: 'certificados'
+      });
     }
   }
   cursoMatriculado.init({
     idCurso: DataTypes.INTEGER,
-    idPersona: DataTypes.INTEGER
+    idPersona: DataTypes.INTEGER,
+    estado: DataTypes.ENUM('PreInscrito', 'Matriculado', 'Cancelado', 'Finalizado'),
+    resultado: DataTypes.ENUM('Aprobado', 'Reprobado', 'Pendiente')
   }, {
     sequelize,
     modelName: 'cursoMatriculado',

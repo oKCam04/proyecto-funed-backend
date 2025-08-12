@@ -30,6 +30,9 @@ module.exports = {
           key: 'id'
         }
       },
+      resultado:{
+        type: Sequelize.ENUM('Aprobado','Reprobado','Pendiente'),defaultValue: 'Pendiente',
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

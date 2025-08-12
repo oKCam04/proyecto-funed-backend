@@ -40,5 +40,15 @@ class PersonasController {
             res.json({ message: "Error al eliminar persona" });
         }
     }
+
+    static async buscarPersonaPorId(req, res) {
+        const { id } = req.params;
+        try {
+            const persona = await PersonasService.buscarPersonaPorId(id);
+            res.json(persona);
+        } catch (error) {
+            res.json({ message: "Error al buscar persona por ID" });
+        }
+    }
 }
 module.exports = PersonasController;

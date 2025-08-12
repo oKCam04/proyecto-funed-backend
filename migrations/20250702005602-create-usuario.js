@@ -16,14 +16,11 @@ module.exports = {
           key: 'id' 
         },
       },
-      nombreUsuario: {
+      email: {
         type: Sequelize.STRING
       },
-      contrasena: {
+      password: {
         type: Sequelize.STRING
-      },
-      fechaCreacion: {
-        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,

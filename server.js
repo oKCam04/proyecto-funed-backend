@@ -24,12 +24,14 @@ app.use(express.json());
     const ofertaCursosRouter=require('./router/ofertaCursosRouter');
     const docenteRouter=require('./router/docenteRouter');
     const inscripcionRouter=require('./router/inscripcionRouter');
+    const usuarioRouter=require('./router/usuarioRouter');
     app.use('/api/',personasRouter);
     app.use('/api/',cursosRouter);
     app.use('/api/',docentesRouter);
     app.use('/api/',ofertaCursosRouter);
     app.use('/api/',docenteRouter);
     app.use('/api/',inscripcionRouter);
+    app.use('/auth',usuarioRouter)
  
 
 

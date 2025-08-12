@@ -39,7 +39,7 @@ module.exports = {
         allowNull: false,
       },
       rol: {
-        type: Sequelize.ENUM('Administrador', 'Usuario','Estudiante'),
+        type: Sequelize.ENUM('Administrador', 'Usuario','Estudiante'),defaultValue: 'Usuario',
         allowNull: false
       },
       createdAt: {

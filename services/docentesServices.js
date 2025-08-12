@@ -36,7 +36,7 @@ class DocentesService {
             if (!docentes) {
                 throw new Error('Docente no encontrado');
             }
-            return await docente.destroy();
+            return await docentes.destroy();
         } catch (error) {
             console.log("Error en servicio al eliminar docente");
         }
