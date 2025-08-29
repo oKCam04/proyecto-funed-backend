@@ -12,19 +12,19 @@ class OfertaCursoService {
         }
     }
 
-    static async crearOfertaCurso(codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente) {
+    static async crearOfertaCurso(codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio ) {
         try {
-            return await ofertaCurso.create({ codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente });
+            return await ofertaCurso.create({ codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio  });
         } catch (error) {
             throw new Error("Error al crear oferta de curso: " + error.message);
         }
     }
 
-    static async actualizarOfertaCurso(id, codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente) {
+    static async actualizarOfertaCurso(id ,codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio ) {
         try {
             const oferta = await ofertaCurso.findByPk(id);
             if (!oferta) throw new Error("Oferta de curso no encontrada");
-            return await oferta.update({ codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente });
+            return await oferta.update({ codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio  });
         } catch (error) {
             throw new Error("Error al actualizar oferta de curso: " + error.message);
         }

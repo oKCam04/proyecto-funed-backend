@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
     fechaFinCurso: DataTypes.DATE,
     horario: DataTypes.STRING,
     cupos: DataTypes.INTEGER,
-    idDocente: DataTypes.INTEGER
+    idDocente: DataTypes.INTEGER,
+    precio: DataTypes.DECIMAL(10, 2)
   }, {
     sequelize,
     modelName: 'ofertaCurso',

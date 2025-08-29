@@ -56,6 +56,8 @@ class PersonasService {
             console.log(error);
         }
     }
+
+    
 }
 
 module.exports = PersonasService;
