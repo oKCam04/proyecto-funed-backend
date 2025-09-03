@@ -25,6 +25,12 @@ app.use(express.json());
     const docenteRouter=require('./router/docenteRouter');
     const inscripcionRouter=require('./router/inscripcionRouter');
     const usuarioRouter=require('./router/usuarioRouter');
+    const pagoRouter=require('./router/pagoRouter');
+    const certificadoRouter=require('./router/certificadoRouter');
+    const asistenciaRouter=require('./router/asistenciaRouter');
+    app.use('/api/',pagoRouter);
+    app.use('/api/',certificadoRouter)
+    app.use('/api/', asistenciaRouter)
     app.use('/api/',personasRouter);
     app.use('/api/',cursosRouter);
     app.use('/api/',docentesRouter);
@@ -32,6 +38,7 @@ app.use(express.json());
     app.use('/api/',docenteRouter);
     app.use('/api/',inscripcionRouter);
     app.use('/auth',usuarioRouter)
+
  
 
 

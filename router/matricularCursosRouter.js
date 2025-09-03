@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const matricularCursoController = require('../controller/matricularCursoController');
+const CursosMatriculados = require('../controller/cursoMatriculadoController');
 
-router.get("/matriculas", matricularCursoController.listarMatriculas);
-router.post("/matriculas", matricularCursoController.crearMatricula);
-router.delete("/matriculas/:id", matricularCursoController.eliminarMatricula);
-router.put("/matriculas/:id", matricularCursoController.actualizarMatricula);
+router.get("/matriculas", CursosMatriculados.listarMatriculas);
+router.post("/matriculas", CursosMatriculados.crearMatricula);
+router.delete("/matriculas/:id", CursosMatriculados);
+router.put("/matriculas/:id", CursosMatriculados);
 
 module.exports = router;
