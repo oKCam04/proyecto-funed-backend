@@ -1,11 +1,12 @@
-const {pago} = require('../models');
+const { pago } = require('../models');
 
 class PagoService {
     static async GetAll() {
         try {
             return await pago.findAll();
         } catch (error) {
-            console.log("Error en servicio al listar cursos");
+            console.log("Error en servicio al listar pagos:", error.message);
+            throw error;
         }
     }
 
@@ -13,20 +14,21 @@ class PagoService {
         try {
             return await pago.create({ idPersona, idCursosMatriculados, formaPago, monto, estado, fechaPago });
         } catch (error) {
-            console.log("Error en servicio al crear"+error);
-            
+            console.log("Error en servicio al crear pago:", error.message);
+            throw error;
         }
     }
 
-    static async Update(id, nombreCurso, duracion, temario, tipCurso) {
+    static async Update(id, cambios) {
         try {
             const datos = await pago.findByPk(id);
             if (!datos) {
-                throw new Error('Curso no encontrado');
+                throw new Error(`Pago con id=${id} no encontrado`);
             }
-            return await datos.update({ nombreCurso, duracion, temario, tipCurso });
+            return await datos.update(cambios);
         } catch (error) {
-            console.log("Error en servicio al actualizar pago");
+            console.log("Error en servicio al actualizar pago:", error.message);
+            throw error;
         }
     }
 
@@ -34,24 +36,27 @@ class PagoService {
         try {
             const datos = await pago.findByPk(id);
             if (!datos) {
-                throw new Error('Curso no encontrado');
+                throw new Error(`Pago con id=${id} no encontrado`);
             }
             return await datos.destroy();
         } catch (error) {
-            console.log("Error en servicio al eliminar pago");
+            console.log("Error en servicio al eliminar pago:", error.message);
+            throw error;
         }
     }
+
     static async GetForId(id) {
         try {
             const datos = await pago.findByPk(id);
             if (!datos) {
-                throw new Error('Curso no encontrado');
+                throw new Error(`Pago con id=${id} no encontrado`);
             }
             return datos;
         } catch (error) {
-            console.log("Error en servicio al buscar pago por ID");
-            
+            console.log("Error en servicio al buscar pago por ID:", error.message);
+            throw error;
         }
     }
- }
+}
+
 module.exports = PagoService;
