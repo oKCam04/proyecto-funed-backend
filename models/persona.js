@@ -39,15 +39,20 @@ module.exports = (sequelize, DataTypes) => {
   persona.init({
     nombre: DataTypes.STRING,
     apellido: DataTypes.STRING,
-    numeroIdentificacion: DataTypes.STRING,
-    tipoIdentificacion: DataTypes.ENUM('Cédula','Tarjeta de identidad'),
-    fechaNacimiento: DataTypes.DATE,
+    numero_identificacion: DataTypes.STRING,
+    tipo_identificacion: DataTypes.ENUM('Cédula','Tarjeta de identidad'),
+    fecha_nacimiento: DataTypes.DATE,
     telefono: DataTypes.STRING,
     correo: DataTypes.STRING,
     rol: DataTypes.ENUM('Administrador', 'Usuario','Estudiante')
   }, {
     sequelize,
     modelName: 'persona',
+    tableName: 'personas',
+    timestamps: true,
+    createdAt: 'created_at', 
+    updatedAt: 'updated_at'
+    
   });
   return persona;
 };

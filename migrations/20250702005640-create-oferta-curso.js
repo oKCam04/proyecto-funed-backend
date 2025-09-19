@@ -31,20 +31,11 @@ module.exports = {
       cupos: {
         type: Sequelize.INTEGER
       },
-      idDocente: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'docentes', 
-          key: 'id'
-        }
+      precio: {
+        type: Sequelize.DECIMAL(10, 2)
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      foto:{
+        type: Sequelize.STRING
       }
     });
   },

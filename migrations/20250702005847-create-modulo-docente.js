@@ -23,23 +23,15 @@ module.exports = {
           key: 'id'
         }
       },
-      idCurosMatriculados: {
+      idOfertaCurso: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'cursoMatriculados', 
+          model: 'ofertaCursos', 
           key: 'id'
         }
       },
       resultado:{
         type: Sequelize.ENUM('Aprobado','Reprobado','Pendiente'),defaultValue: 'Pendiente',
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },
