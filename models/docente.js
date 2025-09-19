@@ -25,10 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   docente.init({
-    idPersona: DataTypes.INTEGER,
+    id_persona: DataTypes.INTEGER,
     especialidad: DataTypes.STRING,
-    fechaContratacion: DataTypes.DATE,
-    fechaTerminacion: DataTypes.DATE
+    fecha_contratacion: DataTypes.DATE,
+    fecha_terminacion: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'docente',

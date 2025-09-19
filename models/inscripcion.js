@@ -22,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   inscripcion.init({
-    idOfertaCurso: DataTypes.INTEGER,
-    fechaInicioInscripcion: DataTypes.DATE,
-    fechaFinInscripcion: DataTypes.DATE,
-    personaInscrita: DataTypes.INTEGER
+    id_oferta_curso: DataTypes.INTEGER,
+    fecha_inicio_inscripcion: DataTypes.DATE,
+    fecha_fin_inscripcion: DataTypes.DATE,
+    persona_inscrita: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'inscripcion',

@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   modulo.init({
     nombre: DataTypes.STRING,
-    idCurso: DataTypes.INTEGER
+    id_curso: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'modulo',

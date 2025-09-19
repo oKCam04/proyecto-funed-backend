@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   asistencia.init({
-    idCursosMatriculados: DataTypes.INTEGER,
+    id_cursos_matriculados: DataTypes.INTEGER,
     asistio: DataTypes.STRING,
     fecha: DataTypes.DATE
   }, {
