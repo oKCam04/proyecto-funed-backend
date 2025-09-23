@@ -12,18 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       pago.belongsTo(models.persona, {
-        foreignKey: 'idPersona',
+        foreignKey: 'id_persona',
         as: 'persona'
       });
-      pago.belongsTo(models.cursoMatriculado, {
-        foreignKey: 'idCursosMatriculados',
+      pago.belongsTo(models.cursomatriculado, {
+        foreignKey: 'id_curso_matriculado',
         as: 'cursoMatriculado'
       });
     }
   }
   pago.init({
     id_persona: DataTypes.INTEGER,
-    id_cursos_matriculados: DataTypes.INTEGER,
+    id_curso_matriculado: DataTypes.INTEGER,
     forma_pago: DataTypes.STRING,
     monto: DataTypes.INTEGER,
     estado: DataTypes.STRING,
@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'pago',
+    timestamps: false
   });
   return pago;
 };

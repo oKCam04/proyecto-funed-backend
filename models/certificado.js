@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      certificado.belongsTo(models.cursoMatriculado, {
-        foreignKey: 'idCursoMatriculado',
+      certificado.belongsTo(models.cursomatriculado, {
+        foreignKey: 'id_curso_matriculado',
         as: 'matricula'
       });
     }
@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'certificado',
+    timestamps: false
   });
   return certificado;
 };

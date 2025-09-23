@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       usuario.belongsTo(models.persona, {
-        foreignKey: 'idPersona',
+        foreignKey: 'id_persona',
         as: 'persona'
       });
     }
@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'usuario',
+    timestamps: false
   });
   return usuario;
 };

@@ -12,26 +12,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       persona.hasMany(models.docente, {
-        foreignKey: 'idPersona',
+        foreignKey: 'id_persona',
         as: 'docentes'
       });
       persona.hasMany(models.usuario, {
-        foreignKey: 'idPersona', 
+        foreignKey: 'id_persona', 
         as: 'usuarios' });
-      persona.hasMany(models.inscripcion, {
-        foreignKey: 'personaInscrita',
-        as: 'inscripciones'
-      });
-      persona.hasMany(models.cursoMatriculado, {
-        foreignKey: 'idPersona',
+      persona.hasMany(models.cursomatriculado, {
+        foreignKey: 'id_persona',
         as: 'cursosMatriculados'
       });
-      persona.hasMany(models.certificado, {
-        foreignKey: 'idPersona',
-        as: 'certificados'
-      });
       persona.hasMany(models.pago,{
-        foreignKey: 'idPersona',
+        foreignKey: 'id_persona',
         as: 'pagos'
       })
     }

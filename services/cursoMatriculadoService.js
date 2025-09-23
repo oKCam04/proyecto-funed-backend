@@ -1,17 +1,17 @@
-const {cursoMatriculado}= require('../models');
+const {cursomatriculado}= require('../models');
 
 class MatricularCursoService {
     static async listarMatriculas() {
         try {
-            return await cursoMatriculado.findAll();
+            return await cursomatriculado.findAll();
         } catch (error) {
-            throw new Error("Error al listar matrículas: " + error.message);
+            throw new Error("Error al listar matrículas: " + error);
         }
     }
 
     static async crearMatricula(idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita) {
         try {
-            return await cursoMatriculado.create({ idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita });
+            return await cursomatriculado.create({ idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita });
         } catch (error) {
             throw new Error("Error al crear matrícula: " + error.message);
         }
@@ -19,7 +19,7 @@ class MatricularCursoService {
 
     static async actualizarMatricula(id, idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita) {
         try {
-            const matricula = await cursoMatriculado.findByPk(id);
+            const matricula = await cursomatriculado.findByPk(id);
             if (!matricula) throw new Error("Matrícula no encontrada");
             return await matricula.update({ idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita });
         } catch (error) {
@@ -29,7 +29,7 @@ class MatricularCursoService {
 
     static async eliminarMatricula(id) {
         try {
-            const matricula = await cursoMatriculado.findByPk(id);
+            const matricula = await cursomatriculado.findByPk(id);
             if (!matricula) throw new Error("Matrícula no encontrada");
             return await matricula.destroy();
         } catch (error) {

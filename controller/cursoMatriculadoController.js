@@ -1,4 +1,4 @@
-const matricularCursoService = require('../services/matricularCursoService');
+const matricularCursoService = require('../services/cursoMatriculadoService');
 
 class MatricularCursoController {
     static async listarMatriculas(req, res) {
@@ -6,7 +6,7 @@ class MatricularCursoController {
             const matriculasLista = await matricularCursoService.listarMatriculas();
             res.json(matriculasLista);
         } catch (error) {
-            res.json({ message: "Error al listar matrículas" });
+            res.json({ message: "Error al listar matrículas", error:error.message });
         }
     }
 

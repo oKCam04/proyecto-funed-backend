@@ -6,7 +6,7 @@ class AsistenciaController {
             const asistencia = await AsistenciaService.listarAsistencia();
             res.json(asistencia);
         } catch (error) {
-            res.json({ message: "Error al listar cursos" });
+            res.json({ message: "Error al listar cursos", error:error.message });
         }
     }
 

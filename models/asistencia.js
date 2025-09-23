@@ -11,19 +11,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      asistencia.belongsTo(models.cursoMatriculado, {
-        foreignKey: 'idCursosMatriculados',
+      asistencia.belongsTo(models.cursomatriculado, {
+        foreignKey: 'id_curso_matriculado',
         as: 'cursoMatriculado'
       });
     }
   }
   asistencia.init({
-    id_cursos_matriculados: DataTypes.INTEGER,
+    id_curso_matriculado: DataTypes.INTEGER,
     asistio: DataTypes.STRING,
     fecha: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'asistencia',
+    timestamps: false
   });
   return asistencia;
 };

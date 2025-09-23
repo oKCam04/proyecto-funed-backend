@@ -11,15 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       docente.belongsTo(models.persona, {
-        foreignKey: 'idPersona',
+        foreignKey: 'id_persona',
         as: 'persona'
       });
-      docente.hasMany(models.ofertaCurso, {
-        foreignKey: 'idDocente',
-        as: 'ofertasCursos'
-      });
-      docente.hasMany(models.moduloDocente, {
-        foreignKey: 'idDocente',
+      docente.hasMany(models.modulodocente, {
+        foreignKey: 'id_docente',
         as: 'modulosDocentes'
       });
     }
@@ -32,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'docente',
+    timestamps: false
   });
   return docente;
 };

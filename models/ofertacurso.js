@@ -12,32 +12,23 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       oferta_curso.belongsTo(models.curso, {
-        foreignKey: 'idCurso',
+        foreignKey: 'id_curso',
         as: 'curso'
       })
-      oferta_curso.belongsTo(models.docente, {
-        foreignKey: 'idDocente',
-        as: 'docentes'
-      })
-      oferta_curso.hasMany(models.inscripcion, {
-        foreignKey: 'idOfertaCurso',
-        as: 'inscripciones'
-      });
     }
   }
   oferta_curso.init({
     codigo_curso: DataTypes.INTEGER,
-    id_curso: DataTypes.INTEGER,
     fecha_inicio_curso: DataTypes.DATE,
     fecha_fin_curso: DataTypes.DATE,
     horario: DataTypes.STRING,
     cupos: DataTypes.INTEGER,
-    id_docente: DataTypes.INTEGER,
     precio: DataTypes.DECIMAL(10, 2),
     foto: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'ofertaCurso',
+    modelName: 'ofertacurso',
+    timestamps: false
   });
-  return ofertaCurso;
+  return oferta_curso;
 };

@@ -23,11 +23,11 @@ app.use(express.json());
     const docentesRouter=require('./router/docenteRouter');
     const ofertaCursosRouter=require('./router/ofertaCursosRouter');
     const docenteRouter=require('./router/docenteRouter');
-    const inscripcionRouter=require('./router/inscripcionRouter');
     const usuarioRouter=require('./router/usuarioRouter');
     const pagoRouter=require('./router/pagoRouter');
     const certificadoRouter=require('./router/certificadoRouter');
     const asistenciaRouter=require('./router/asistenciaRouter');
+    const cursosMatriculados=require('./router/matricularCursosRouter')
     app.use('/api/',pagoRouter);
     app.use('/api/',certificadoRouter)
     app.use('/api/', asistenciaRouter)
@@ -36,8 +36,9 @@ app.use(express.json());
     app.use('/api/',docentesRouter);
     app.use('/api/',ofertaCursosRouter);
     app.use('/api/',docenteRouter);
-    app.use('/api/',inscripcionRouter);
+    app.use('/api/',cursosMatriculados)
     app.use('/auth',usuarioRouter)
+    
 
  
 
