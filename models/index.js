@@ -1,5 +1,6 @@
 'use strict';
 
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
@@ -15,6 +16,15 @@ if (config.use_env_variable) {
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('✅ Conexión a Supabase exitosa');
+  } catch (error) {
+    console.error('❌ Error al conectar con la base de datos:', error);
+  }
+})();
 
 fs
   .readdirSync(__dirname)

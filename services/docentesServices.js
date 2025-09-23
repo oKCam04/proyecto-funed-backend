@@ -20,13 +20,14 @@ class DocentesService {
 
     static async actualizarDocente(id, idPersona, especialidad, fechaContratacion, fechaTerminacion) {
         try {
-            const docente = await docente.findByPk(id);
-            if (!docente) {
+            const docentes = await docente.findByPk(id);
+            if (!docentes) {
                 throw new Error('Docente no encontrado');
             }
-            return await docente.update({ idPersona, especialidad, fechaContratacion, fechaTerminacion });
+            await docentes.update({ idPersona, especialidad, fechaContratacion, fechaTerminacion });
+            return docentes;
         } catch (error) {
-            console.log("Error en servicio al actualizar docente");
+            console.log("Error en servicio al actualizar docente"+error.message);
         }
     }
 

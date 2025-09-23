@@ -20,14 +20,6 @@ module.exports = {
       },
       tipoCurso: {
         type: Sequelize.ENUM('Técnico','Corto')
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },

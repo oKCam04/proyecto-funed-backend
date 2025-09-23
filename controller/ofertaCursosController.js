@@ -11,9 +11,9 @@ class OfertaCursosController {
     }
 
     static async crearOfertaCurso(req, res) {
-        const { codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio } = req.body;
+        const { codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio,foto } = req.body;
         try {
-            const nuevaOfertaCurso = await ofertaCursosService.crearOfertaCurso(codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio );
+            const nuevaOfertaCurso = await ofertaCursosService.crearOfertaCurso(codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio, foto );
             res.status(201).json(nuevaOfertaCurso);
         } catch (error) {
             res.status(500).json({ message: "Error al crear oferta de curso" });
@@ -39,6 +39,15 @@ class OfertaCursosController {
             res.json({ mensaje: "Oferta de curso eliminada exitosamente" });
         } catch (error) {
             res.status(500).json({ message: "Error al eliminar oferta de curso" });
+        }
+    }
+    static async obtenerOfertaCursoPorId(req, res) {
+        const { id } = req.params;
+        try {
+            const ofertaCurso = await ofertaCursosService.obtenerOfertaCursoPorId(id);
+            res.json(ofertaCurso);
+        } catch (error) {
+            res.status(500).json({ message: "Error al obtener oferta de curso" });
         }
     }
 }

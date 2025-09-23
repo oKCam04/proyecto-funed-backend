@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      ofertaCurso.belongsTo(models.curso,{
+      ofertaCurso.belongsTo(models.curso, {
         foreignKey: 'idCurso',
         as: 'curso'
       })
-      ofertaCurso.belongsTo(models.docente,{
+      ofertaCurso.belongsTo(models.docente, {
         foreignKey: 'idDocente',
-        as: 'docente'
+        as: 'docentes'
       })
       ofertaCurso.hasMany(models.inscripcion, {
         foreignKey: 'idOfertaCurso',
@@ -33,7 +33,8 @@ module.exports = (sequelize, DataTypes) => {
     horario: DataTypes.STRING,
     cupos: DataTypes.INTEGER,
     idDocente: DataTypes.INTEGER,
-    precio: DataTypes.DECIMAL(10, 2)
+    precio: DataTypes.DECIMAL(10, 2),
+    foto: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'ofertaCurso',

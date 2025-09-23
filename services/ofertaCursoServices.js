@@ -1,13 +1,14 @@
-const {ofertaCurso, docente, curso} =require('../models');
+const {ofertaCurso, docente, curso, persona} =require('../models');
 
 class OfertaCursoService {
     static async listarOfertasCursos() {
         try {
             return await ofertaCurso.findAll({include: [
-                {model: docente, as: 'docente', attributes: ['id']},
+                {model: docente, as: 'docentes', attributes: ['id'], include:[{model:persona, as:'persona', attributes:['id','nombre']}] },
                 {model: curso, as: 'curso', attributes: ['id', 'nombreCurso']}
             ]});
         } catch (error) {
+            console.log(error.message);
             throw new Error("Error al listar ofertas de cursos: " + error.message);
         }
     }
@@ -37,6 +38,22 @@ class OfertaCursoService {
             return await oferta.destroy();
         } catch (error) {
             throw new Error("Error al eliminar oferta de curso: " + error.message);
+        }
+    }
+
+    static async obtenerOfertaCursoPorId(id) {
+        try {
+            const oferta = await ofertaCurso.findByPk(id, {
+                include: [
+                    { model: docente, as: 'docentes', attributes: ['id'],include:[{model:persona, as:'persona', attributes:['id','nombre']}] },
+                    { model: curso, as: 'curso', attributes: ['id', 'nombreCurso','duracion','temario','tipoCurso'] }
+                ]
+            });
+            if (!oferta) throw new Error("Oferta de curso no encontrada");
+            return oferta;
+        } catch (error) {
+            console.log(error.message);
+            throw new Error("Error al obtener oferta de curso: " + error.message);
         }
     }
 }

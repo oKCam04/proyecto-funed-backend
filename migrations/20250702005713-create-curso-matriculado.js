@@ -31,14 +31,6 @@ module.exports = {
       },
       resultado:{
         type:Sequelize.ENUM('Aprobado','Reprobado','Pendiente'),defaultValue:'Pendiente',
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },
