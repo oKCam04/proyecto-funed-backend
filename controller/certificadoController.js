@@ -6,7 +6,7 @@ class CertificadoController {
             const data = await CertificadoService.GetAll();
             res.json(data);
         } catch (error) {
-            res.json({ message: "Error al listar cursos" });
+            res.status(500).json({ message: "Error al listar certificados", error: error.message });
         }
     }
 
@@ -14,9 +14,9 @@ class CertificadoController {
         const { idCursoMatriculado, fechaEmision, urlCertificado } = req.body;
         try {
             const data = await CertificadoService.Create(idCursoMatriculado, fechaEmision, urlCertificado);
-            res.json(req.body);
+            res.json(data);
         } catch (error) {
-            res.json({ message: "Error al crear curso" });
+            res.status(500).json({ message: "Error al crear certificado", error: error.message });
         }
     }
 
@@ -27,7 +27,7 @@ class CertificadoController {
             const data = await CertificadoService.Update(id, idCursoMatriculado, fechaEmision, urlCertificado);
             res.json(data);
         } catch (error) {
-            res.json({ message: "Error al actualizar curso" });
+            res.status(500).json({ message: "Error al actualizar certificado", error: error.message });
         }
     }
 
@@ -35,21 +35,21 @@ class CertificadoController {
         const { id } = req.params;
         try {
             await CertificadoService.Delete(id);
-            res.json({mensaje:"Eliminado exitosamente"})
+            res.json({ mensaje: "Certificado eliminado exitosamente" });
         } catch (error) {
-            res.json({ message: "Error al eliminar " });
+            res.status(500).json({ message: "Error al eliminar certificado", error: error.message });
         }
     }
 
     static async GetForId(req, res) {
         const { id } = req.params;
         try {
-            await CertificadoService.GetForId(id);
-            res.json({ mensaje: "Curso eliminado exitosamente" });
+            const data = await CertificadoService.GetForId(id);
+            res.json(data);
         } catch (error) {
-            res.json({ message: "Error al eliminar curso" });
+            res.status(500).json({ message: "Error al buscar certificado", error: error.message });
         }
     }
-    
 }
+
 module.exports = CertificadoController;

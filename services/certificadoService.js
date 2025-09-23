@@ -1,57 +1,62 @@
-const {certificado} = require('../models');
+const { certificado } = require('../models');
 
 class CertificadoService {
     static async GetAll() {
         try {
             return await certificado.findAll();
         } catch (error) {
-            console.log("Error en servicio al listar cursos");
+            console.log("Error en servicio al listar certificados:", error.message);
+            throw error;
         }
     }
 
-    static async Create(nombreCurso, duracion, temario, tipoCurso) {
+    static async Create(idCursoMatriculado, fechaEmision, urlCertificado) {
         try {
-            return await certificado.create({ nombreCurso, duracion, temario, tipoCurso });
+            return await certificado.create({ idCursoMatriculado, fechaEmision, urlCertificado });
         } catch (error) {
-            console.log("Error en servicio al crear certificado");
-            
+            console.log("Error en servicio al crear certificado:", error.message);
+            throw error;
         }
     }
 
-    static async Update(id, nombreCurso, duracion, temario, tipCurso) {
+    static async Update(id, idCursoMatriculado, fechaEmision, urlCertificado) {
         try {
-            const cursoEncontrado = await certificado.findByPk(id);
-            if (!cursoEncontrado) {
-                throw new Error('Curso no encontrado');
+            const cert = await certificado.findByPk(id);
+            if (!cert) {
+                throw new Error(`Certificado con id=${id} no encontrado`);
             }
-            return await cursoEncontrado.update({ nombreCurso, duracion, temario, tipCurso });
+            return await cert.update({ idCursoMatriculado, fechaEmision, urlCertificado });
         } catch (error) {
-            console.log("Error en servicio al actualizar certificado");
+            console.log("Error en servicio al actualizar certificado:", error.message);
+            throw error;
         }
     }
 
     static async Delete(id) {
         try {
-            const cursoEncontrado = await certificado.findByPk(id);
-            if (!cursoEncontrado) {
-                throw new Error('Curso no encontrado');
+            const cert = await certificado.findByPk(id);
+            if (!cert) {
+                throw new Error(`Certificado con id=${id} no encontrado`);
             }
-            return await cursoEncontrado.destroy();
+            return await cert.destroy();
         } catch (error) {
-            console.log("Error en servicio al eliminar certificado");
+            console.log("Error en servicio al eliminar certificado:", error.message);
+            throw error;
         }
     }
+
     static async GetForId(id) {
         try {
-            const cursoEncontrado = await certificado.findByPk(id);
-            if (!cursoEncontrado) {
-                throw new Error('Curso no encontrado');
+            const cert = await certificado.findByPk(id);
+            if (!cert) {
+                throw new Error(`Certificado con id=${id} no encontrado`);
             }
-            return cursoEncontrado;
+            return cert;
         } catch (error) {
-            console.log("Error en servicio al buscar certificado por ID");
-            
+            console.log("Error en servicio al buscar certificado por ID:", error.message);
+            throw error;
         }
     }
- }
+}
+
 module.exports = CertificadoService;
