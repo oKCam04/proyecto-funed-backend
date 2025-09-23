@@ -3,8 +3,8 @@ const UserService=require("../services/usuarioServices");
 class UsuarioController {
     static async register(req, res){
         try{
-            const {idPersona, email, password} = req.body;
-            const user= await UserService.register(idPersona, email, password);
+            const {id_persona, email, password} = req.body;
+            await UserService.register(id_persona, email, password);
             res.json("Usuario registrado correctamente");
         }catch(error){
             res.status(500).json({error: error.message});
@@ -32,9 +32,9 @@ class UsuarioController {
 
     static async actualizarUsuario(req, res){
         const {id}= req.params;
-        const {idPersona, email, password}=req.body;
+        const {id_persona, email, password}=req.body;
         try{
-            const cursoActualizado= await UserService.update(id, idPersona, email, password);
+            const cursoActualizado= await UserService.update(id, id_persona, email, password);
             res.json(cursoActualizado)
         }catch(error){
             console.log(error)

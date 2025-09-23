@@ -6,9 +6,9 @@ require("dotenv").config();
 
 class UsuarioService{
 
-    static async register(idPersona, email, password){
+    static async register(id_persona, email, password){
         const hashed= await bcrypt.hash(password,10);
-        return usuario.create({idPersona, email, password: hashed})  
+        return usuario.create({id_persona, email, password: hashed})  
     }
 
     static async login( email, password){
@@ -26,12 +26,12 @@ class UsuarioService{
         });
     }
 
-    static async update(id, idPersona, email, password){
+    static async update(id, id_persona, email, password){
         try{
             const hashed= await bcrypt.hash(password,10);
             const user= await usuario.findByPk(id);
             if(!user) throw new Error("usuario no encontrado");
-            return await user.update({idPersona, email, password:hashed})
+            return await user.update({id_persona, email, password:hashed})
         }catch(error){
             throw new Error("Error al actualizar usuario"+error.message)
         }
