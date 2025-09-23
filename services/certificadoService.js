@@ -10,16 +10,16 @@ class CertificadoService {
         }
     }
 
-    static async Create(idCursoMatriculado, fechaEmision, urlCertificado) {
+    static async Create(id_curso_matriculado, fecha_emision, url_certificado) {
         try {
-            return await certificado.create({ idCursoMatriculado, fechaEmision, urlCertificado });
+            return await certificado.create({ id_curso_matriculado, fecha_emision, url_certificado });
         } catch (error) {
             console.log("Error en servicio al crear certificado:", error.message);
             throw error;
         }
     }
 
-    static async Update(id, idCursoMatriculado, fechaEmision, urlCertificado) {
+    static async Update(id, id_curso_matriculado, fecha_emision, url_certificado) {
         try {
             const cert = await certificado.findByPk(id);
             if (!cert) {
