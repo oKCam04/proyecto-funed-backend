@@ -18,9 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   certificado.init({
-    idCursoMatriculado: DataTypes.INTEGER,
-    fechaEmision: DataTypes.DATE,
-    urlCertificado: DataTypes.STRING
+    id_curso_matriculado: DataTypes.INTEGER,
+    fecha_emision: DataTypes.DATE,
+    url_certificado: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'certificado',

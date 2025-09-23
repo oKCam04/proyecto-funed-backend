@@ -22,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   curso.init({
-    nombreCurso: DataTypes.STRING,
+    nombre_curso: DataTypes.STRING,
     duracion: DataTypes.INTEGER,
     temario: DataTypes.TEXT,
-    tipoCurso: DataTypes.STRING
+    tipo_curso: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'curso',

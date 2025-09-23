@@ -22,12 +22,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   pago.init({
-    idPersona: DataTypes.INTEGER,
-    idCursosMatriculados: DataTypes.INTEGER,
-    formaPago: DataTypes.STRING,
+    id_persona: DataTypes.INTEGER,
+    id_cursos_matriculados: DataTypes.INTEGER,
+    forma_pago: DataTypes.STRING,
     monto: DataTypes.INTEGER,
     estado: DataTypes.STRING,
-    fechaPago: DataTypes.DATE
+    fecha_pago: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'pago',
