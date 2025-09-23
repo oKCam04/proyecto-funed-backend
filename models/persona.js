@@ -32,11 +32,11 @@ module.exports = (sequelize, DataTypes) => {
     nombre: DataTypes.STRING,
     apellido: DataTypes.STRING,
     numero_identificacion: DataTypes.STRING,
-    tipo_identificacion: DataTypes.ENUM('Cédula','Tarjeta de identidad'),
+    tipo_identificacion: DataTypes.ENUM('CC','TI','CE','PAS'),
     fecha_nacimiento: DataTypes.DATE,
     telefono: DataTypes.STRING,
     correo: DataTypes.STRING,
-    rol: DataTypes.ENUM('Administrador', 'Usuario','Estudiante')
+    rol:{ type: DataTypes.ENUM('Administrador', 'Usuario','Estudiante','Docente'), defaultValue:'Usuario'}
   }, {
     sequelize,
     modelName: 'persona',
