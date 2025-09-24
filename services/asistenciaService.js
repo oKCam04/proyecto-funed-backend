@@ -20,7 +20,9 @@ class AsistenciaService {
     static async actualizar_asistencia(id_cursos_matriculados, asistio,fecha) {
         try {
             const matricula = await asistencia.findByPk(id);
-            if (!matricula) throw new Error("Matrícula no encontrada");
+            if (!matricula) {
+                throw new Error("Matrícula no encontrada");
+            }
             return await matricula.update({id_cursos_matriculados, asistio,fecha });
         } catch (error) {
             throw new Error("Error al actualizar matrícula: " + error.message);

@@ -13,7 +13,7 @@ class CertificadoController {
     static async Create(req, res) {
         const { id_curso_matriculado, fecha_emision, url_certificado } = req.body;
         try {
-            const data = await CertificadoService.Create(id_curso_matriculado, fecha_emision, urlCertificado);
+            const data = await CertificadoService.Create(id_curso_matriculado, fecha_emision, url_certificado);
             res.json(data);
         } catch (error) {
             res.status(500).json({ message: "Error al crear certificado", error: error.message });

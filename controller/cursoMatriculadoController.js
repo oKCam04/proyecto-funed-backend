@@ -29,5 +29,16 @@ class MatricularCursoController {
             res.json({ message: "Error al eliminar matrícula" });
         }
     }
+
+    static async actualizar_matricula(req, res) {
+        const { id } = req.params;
+        const { id_oferta_curso, persona_inscrita } = req.body;
+        try {
+            const matriculaActualizada = await matricularCursoService.actualizar_matricula(id, id_oferta_curso, persona_inscrita);
+            res.json(matriculaActualizada);
+        } catch (error) {
+            res.json({ message: "Error al actualizar matrícula", error: error.message });
+        }
+    }
 }
 module.exports = MatricularCursoController;

@@ -23,7 +23,7 @@ class MatricularCursoService {
             if (!matricula) {
                 throw new Error("Matrícula no encontrada");
             }
-            return await matricula.update({ idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita });
+            return await matricula.update({ id_oferta_curso, titulo, ofertas, fecha_inicio_inscripcion, fecha_fin_inscripcion, persona_inscrita });
         } catch (error) {
             throw new Error("Error al actualizar matrícula: " + error.message);
         }

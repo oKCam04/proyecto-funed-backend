@@ -11,20 +11,20 @@ class cursosService {
 
     static async crearCurso(nombreCurso, duracion, temario, tipoCurso) {
         try {
-            return await curso.create({ nombreCurso, duracion, temario, tipoCurso });
+            return await curso.create({ nombre_curso, duracion, temario, tipo_curso });
         } catch (error) {
             console.log("Error en servicio al crear curso");
             
         }
     }
 
-    static async actualizarCurso(id, nombreCurso, duracion, temario, tipCurso) {
+    static async actualizarCurso(id, nombre_curso, duracion, temario, tipo_curso) {
         try {
             const cursoEncontrado = await curso.findByPk(id);
             if (!cursoEncontrado) {
                 throw new Error('Curso no encontrado');
             }
-            return await cursoEncontrado.update({ nombreCurso, duracion, temario, tipCurso });
+            return await cursoEncontrado.update({ nombre_curso, duracion, temario, tipo_curso });
         } catch (error) {
             console.log("Error en servicio al actualizar curso");
         }
