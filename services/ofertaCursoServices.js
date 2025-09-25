@@ -13,19 +13,19 @@ class OfertaCursoService {
         }
     }
 
-    static async crearOfertaCurso(codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio ) {
+    static async crearOfertaCurso(codigo_curso, id_curso, fecha_inicio_curso, fecha_fin_curso, horario, cupos, idDocente,precio,foto ) {
         try {
-            return await ofertacurso.create({ codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio  });
+            return await ofertacurso.create({ codigo_curso, id_curso, fecha_inicio_curso, fecha_fin_curso, horario, cupos, idDocente,precio,foto  });
         } catch (error) {
             throw new Error("Error al crear oferta de curso: " + error.message);
         }
     }
 
-    static async actualizarOfertaCurso(id ,codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio ) {
+    static async actualizarOfertaCurso(id ,codigo_curso, id_curso, fecha_inicio_curso, fecha_fin_curso, horario, cupos, idDocente,precio,foto ) {
         try {
             const oferta = await ofertacurso.findByPk(id);
             if (!oferta) throw new Error("Oferta de curso no encontrada");
-            return await oferta.update({ codigoCurso, idCurso, fechaInicioCurso, fechaFinCurso, horario, cupos, idDocente,precio  });
+            return await oferta.update({ codigo_curso, id_curso, fecha_inicio_curso, fecha_fin_curso, horario, cupos, idDocente,precio,foto  });
         } catch (error) {
             throw new Error("Error al actualizar oferta de curso: " + error.message);
         }
@@ -45,8 +45,7 @@ class OfertaCursoService {
         try {
             const oferta = await ofertacurso.findByPk(id, {
                 include: [
-                    { model: docente, as: 'docentes', attributes: ['id'],include:[{model:persona, as:'persona', attributes:['id','nombre']}] },
-                    { model: curso, as: 'curso', attributes: ['id', 'nombreCurso','duracion','temario','tipoCurso'] }
+                { model: curso, as: 'curso', attributes: ['id', 'nombre_curso','duracion','temario','tipo_curso'] }
                 ]
             });
             if (!oferta) throw new Error("Oferta de curso no encontrada");

@@ -9,12 +9,11 @@ class DocenteController {
             console.error("Error al listar docentes:", error);
             res.status(500).json({ message: "Error al listar docentes" });
         }
-    }
-
+    }  
     static async crearDocente(req, res) {
-        const { idPersona, especialidad, fechaContratacion, fechaTerminacion } = req.body;
+        const { id_persona, especialidad, fecha_contratacion, fecha_terminacion } = req.body;
         try {
-            const nuevoDocente = await docenteService.crearDocente(idPersona, especialidad, fechaContratacion, fechaTerminacion);
+            const nuevoDocente = await docenteService.crearDocente(id_persona, especialidad, fecha_contratacion, fecha_terminacion);
             res.status(201).json(nuevoDocente);
         } catch (error) {
             console.error("Error al crear docente:", error);
@@ -24,9 +23,9 @@ class DocenteController {
 
     static async actualizarDocente(req, res) {
         const { id } = req.params;
-        const { idPersona, especialidad, fechaContratacion, fechaTerminacion } = req.body;
+        const { id_persona, especialidad, fecha_contratacion, fecha_terminacion } = req.body;
         try {
-            const docenteActualizado = await docenteService.actualizarDocente(id, idPersona, especialidad, fechaContratacion, fechaTerminacion);
+            const docenteActualizado = await docenteService.actualizarDocente(id, id_persona, especialidad, fecha_contratacion, fecha_terminacion);
             res.status(200).json(docenteActualizado);
         } catch (error) {
             console.error("Error al actualizar docente:", error);
