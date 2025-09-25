@@ -10,21 +10,21 @@ class DocentesService {
         }
     }
 
-    static async crearDocente(idPersona, especialidad, fechaContratacion, fechaTerminacion) {
+    static async crearDocente(id_persona, especialidad, fecha_contratacion, fecha_terminacion) {
         try {
-            return await docente.create({ idPersona, especialidad, fechaContratacion, fechaTerminacion });
+            return await docente.create({ id_persona, especialidad, fecha_contratacion, fecha_terminacion });
         } catch (error) {
-            console.log("Error en servicio al crear docente");
+            console.log("Error en servicio al crear docente"+error.message);
         }
     }
 
-    static async actualizarDocente(id, idPersona, especialidad, fechaContratacion, fechaTerminacion) {
+    static async actualizarDocente(id, id_persona, especialidad, fecha_contratacion, fecha_terminacion) {
         try {
             const docentes = await docente.findByPk(id);
             if (!docentes) {
                 throw new Error('Docente no encontrado');
             }
-            await docentes.update({ idPersona, especialidad, fechaContratacion, fechaTerminacion });
+            await docentes.update({ id_persona, especialidad, fecha_contratacion, fecha_terminacion });
             return docentes;
         } catch (error) {
             console.log("Error en servicio al actualizar docente"+error.message);

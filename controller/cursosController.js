@@ -11,9 +11,9 @@ class CursosController {
     }
 
     static async crearCurso(req, res) {
-        const { nombreCurso, duracion, temario, tipoCurso } = req.body;
+        const { nombre_curso, duracion, temario, tipo_curso } = req.body;
         try {
-            const nuevoCurso = await CursosService.crearCurso(nombreCurso, duracion, temario, tipoCurso);
+            const nuevoCurso = await CursosService.crearCurso(nombre_curso, duracion, temario, tipo_curso);
             res.json(req.body);
         } catch (error) {
             res.json({ message: "Error al crear curso" });
@@ -22,9 +22,9 @@ class CursosController {
 
     static async actualizarCurso(req, res) {
         const { id } = req.params;
-        const { nombreCurso, duracion, temario, tipoCurso } = req.body;
+        const { nombre_curso, duracion, temario, tipo_curso } = req.body;
         try {
-            const cursoActualizado = await CursosService.actualizarCurso(id, nombreCurso, duracion, temario, tipoCurso);
+            const cursoActualizado = await CursosService.actualizarCurso(id, nombre_curso, duracion, temario, tipo_curso);
             res.json(cursoActualizado);
         } catch (error) {
             res.json({ message: "Error al actualizar curso" });

@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   oferta_curso.init({
     codigo_curso: DataTypes.INTEGER,
+    id_curso: DataTypes.INTEGER,
     fecha_inicio_curso: DataTypes.DATE,
     fecha_fin_curso: DataTypes.DATE,
     horario: DataTypes.STRING,
