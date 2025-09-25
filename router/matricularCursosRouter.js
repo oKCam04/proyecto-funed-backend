@@ -6,5 +6,6 @@ router.get("/matriculas", CursosMatriculados.listarMatriculas);
 router.post("/matriculas", CursosMatriculados.crearMatricula);
 router.delete("/matriculas/:id", CursosMatriculados);
 router.put("/matriculas/:id", CursosMatriculados);
+router.get("/cursosPersonas/:id", CursosMatriculados.cursoMatriculadoPersona)
 
 module.exports = router;
