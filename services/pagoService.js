@@ -57,6 +57,6 @@ class PagoService {
             throw error;
         }
     }
-}
+}; 
 
 module.exports = PagoService;

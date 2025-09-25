@@ -3,6 +3,10 @@ const express=require('express');
 const cors = require('cors');
 const app=express();
 
+//swagger 
+const swaggerIU= require('swagger-ui-express')
+const specs=require('./swagger/swagger.js')
+
 //orden archivos de ejecución, cors, env, express.json, rutas, server 
 //dotenv
 const env=require('dotenv');
@@ -40,7 +44,8 @@ app.use(express.json());
     app.use('/auth',usuarioRouter)
     
 
- 
+ //swagger json
+ app.use("/api-docs",swaggerIU.serve, swaggerIU.setup(specs) )
 
 
 
