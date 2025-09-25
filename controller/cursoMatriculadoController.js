@@ -29,5 +29,16 @@ class MatricularCursoController {
             res.json({ message: "Error al eliminar matrícula" });
         }
     }
+
+    static async cursoMatriculadoPersona(req, res){
+        const {id}=req.params;
+        try{
+            const cursos=await matricularCursoService.cursoMatriculadoPersona(id);
+            
+            res.status(200).json({mensaje:"Cursos traidos correctamente", cursos:cursos })
+        }catch(error){
+            res.status(400).json({mensaje:"Error en la consulta controller", error:error.message})
+        }
+    }
 }
 module.exports = MatricularCursoController;
