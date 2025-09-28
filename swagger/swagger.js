@@ -19,7 +19,19 @@ const swaggerDefinition = {
       url: 'https://proyecto-funed-backend.onrender.com',
       description: 'Servidor de Producción'
     }
-  ]
+  ],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      }
+    }
+  },
+  security: [{
+    bearerAuth: []
+  }]
 };
 
 const options = {

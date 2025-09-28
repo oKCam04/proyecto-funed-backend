@@ -19,13 +19,13 @@ class CertificadoService {
         }
     }
 
-    static async Update(id, idCursoMatriculado, fechaEmision, urlCertificado) {
+    static async Update(id, id_curso_matriculado, fecha_emision, url_certificado) {
         try {
             const cert = await certificado.findByPk(id);
             if (!cert) {
                 throw new Error(`Certificado con id=${id} no encontrado`);
             }
-            return await cert.update({ idCursoMatriculado, fechaEmision, urlCertificado });
+            return await cert.update({ id_curso_matriculado, fecha_emision, url_certificado });
         } catch (error) {
             console.log("Error en servicio al actualizar certificado:", error.message);
             throw error;
