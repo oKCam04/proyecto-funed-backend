@@ -10,9 +10,9 @@ class PagoService {
         }
     }
 
-    static async Create(idPersona, idCursosMatriculados, formaPago, monto, estado, fechaPago) {
+    static async Create(id_persona, id_curso_matriculado, forma_pago, monto, estado, fecha_pago) {
         try {
-            return await pago.create({ idPersona, idCursosMatriculados, formaPago, monto, estado, fechaPago });
+            return await pago.create({ id_persona, id_curso_matriculado, forma_pago, monto, estado, fecha_pago });
         } catch (error) {
             console.log("Error en servicio al crear pago:", error.message);
             throw error;

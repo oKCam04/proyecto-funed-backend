@@ -11,9 +11,9 @@ class MatricularCursoController {
     }
 
     static async crearMatricula(req, res) {
-        const { idOfertaCurso, personaInscrita } = req.body;
+        const { id_curso_oferta, id_persona } = req.body;
         try {
-            const nuevaMatricula = await matricularCursoService.crearMatricula(idOfertaCurso, personaInscrita);
+            const nuevaMatricula = await matricularCursoService.crearMatricula(id_curso_oferta, id_persona);
             res.status(201).json(nuevaMatricula);
         } catch (error) {
             res.status(400).json({ message: "Error al crear matrícula", error: error.message });

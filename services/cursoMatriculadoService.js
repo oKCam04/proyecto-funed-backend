@@ -28,22 +28,8 @@ class MatricularCursoService {
             if (!matricula) {
                 throw new Error("Matrícula no encontrada");
             }
-
-            const updateData = {};
-            if (data.idCursoOferta !== undefined) {
-                updateData.id_curso_oferta = data.idCursoOferta;
-            }
-            if (data.idPersona !== undefined) {
-                updateData.id_persona = data.idPersona;
-            }
-            if (data.estado !== undefined) {
-                updateData.estado = data.estado;
-            }
-            if (data.resultado !== undefined) {
-                updateData.resultado = data.resultado;
-            }
-
-            return await matricula.update(updateData);
+            // No mapping needed, controller now sends snake_case keys in the data object
+            return await matricula.update(data);
         } catch (error) {
             throw new Error("Error al actualizar matrícula: " + error.message);
         }
