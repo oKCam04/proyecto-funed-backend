@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   asistencia.init({
     id_curso_matriculado: DataTypes.INTEGER,
-    asistio: DataTypes.STRING,
+    asistio: DataTypes.ENUM('Si', 'No'),
     fecha: DataTypes.DATE
   }, {
     sequelize,

@@ -23,14 +23,15 @@ const aunthmiddleware = require('../middlewares/auth.middleware');
  *           type: integer
  *         asistio:
  *           type: string
- *           description: "Indica el estado de la asistencia (ej: 'Presente', 'Ausente')."
+ *           enum: [Si, No]
+ *           description: "Indica si el estudiante asistió."
  *         fecha:
  *           type: string
  *           format: date-time
  *       example:
  *         id: 1
  *         id_curso_matriculado: 1
- *         asistio: "Presente"
+ *         asistio: "Si"
  *         fecha: "2024-08-05T10:00:00Z"
  *     AsistenciaInput:
  *       type: object
@@ -44,13 +45,14 @@ const aunthmiddleware = require('../middlewares/auth.middleware');
  *           description: ID de la matrícula del curso.
  *         asistio:
  *           type: string
- *           description: "Indica el estado de la asistencia (ej: 'Presente', 'Ausente')."
+ *           enum: [Si, No]
+ *           description: "Indica si el estudiante asistió."
  *         fecha:
  *           type: string
  *           format: date-time
  *       example:
  *         id_curso_matriculado: 1
- *         asistio: "Presente"
+ *         asistio: "Si"
  *         fecha: "2024-08-05T10:00:00Z"
  */
 
