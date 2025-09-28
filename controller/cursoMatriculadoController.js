@@ -14,9 +14,9 @@ class MatricularCursoController {
         const { idOfertaCurso, personaInscrita } = req.body;
         try {
             const nuevaMatricula = await matricularCursoService.crearMatricula(idOfertaCurso, personaInscrita);
-            res.json(nuevaMatricula);
+            res.status(201).json(nuevaMatricula);
         } catch (error) {
-            res.json({ message: "Error al crear matrícula" });
+            res.status(400).json({ message: "Error al crear matrícula", error: error.message });
         }
     }
 
@@ -40,5 +40,16 @@ class MatricularCursoController {
             res.status(400).json({mensaje:"Error en la consulta controller", error:error.message})
         }
     }
+
+    static async obtenerModuloPersona(req, res){
+        const {id_persona, id_oferta_curso}=req.params;
+        try{
+            const modulos=await matricularCursoService.obtenerModulosPorPersona(id_persona, id_oferta_curso);
+            res.status(200).json({mensaje:"Modulo traido correctamente", modulos:modulos})
+        }catch(error){
+            res.status(400).json({mensaje:"Error en la consulta", error:error.message})
+        }
+    }
+
 }
 module.exports = MatricularCursoController;
