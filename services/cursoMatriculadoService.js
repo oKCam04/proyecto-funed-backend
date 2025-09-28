@@ -9,19 +9,41 @@ class MatricularCursoService {
         }
     }
 
-    static async crearMatricula(idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita) {
+    static async crearMatricula(idOfertaCurso, personaInscrita) {
         try {
-            return await cursomatriculado.create({ idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita });
+            return await cursomatriculado.create({ 
+                id_curso_oferta: idOfertaCurso,
+                id_persona: personaInscrita,
+                estado: 'PreInscrito',
+                resultado: 'Pendiente'
+            });
         } catch (error) {
             throw new Error("Error al crear matrícula: " + error.message);
         }
     }
 
-    static async actualizarMatricula(id, idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita) {
+    static async actualizarMatricula(id, data) {
         try {
             const matricula = await cursomatriculado.findByPk(id);
-            if (!matricula) throw new Error("Matrícula no encontrada");
-            return await matricula.update({ idOfertaCurso, titulo, ofertas, fechaInicioInscripcion, fechaFinInscripcion, personaInscrita });
+            if (!matricula) {
+                throw new Error("Matrícula no encontrada");
+            }
+
+            const updateData = {};
+            if (data.idCursoOferta !== undefined) {
+                updateData.id_curso_oferta = data.idCursoOferta;
+            }
+            if (data.idPersona !== undefined) {
+                updateData.id_persona = data.idPersona;
+            }
+            if (data.estado !== undefined) {
+                updateData.estado = data.estado;
+            }
+            if (data.resultado !== undefined) {
+                updateData.resultado = data.resultado;
+            }
+
+            return await matricula.update(updateData);
         } catch (error) {
             throw new Error("Error al actualizar matrícula: " + error.message);
         }
@@ -85,6 +107,50 @@ class MatricularCursoService {
             throw new Error("Error al crear matrícula: " + error.message);
         }
     }
+
+    static async obtenerModulosPorPersona(id_persona, id_curso_oferta){
+        try {
+      const matricula = await cursomatriculado.findOne({
+        where: {
+          id_persona,
+          id_curso_oferta,
+          estado: 'Activo'
+        },
+        include: [
+          {
+            model: require('../models').ofertacurso,
+            as: 'curso', // alias definido en la relación cursomatriculado → ofertacurso
+            include: [
+              {
+                model: require('../models').curso,
+                as: 'curso', // alias ofertacurso → curso
+                include: [
+                  {
+                    model: require('../models').modulo,
+                    as: 'modulos' // alias curso → modulos
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      });
+
+      if (!matricula) return null;
+
+      // Respuesta simplificada: solo módulos del curso
+      return {
+        curso: matricula.curso?.curso?.nombre_curso,
+        modulos: matricula.curso?.curso?.modulos?.map(mod => ({
+          id: mod.id,
+          nombre: mod.nombre
+        })) || []
+      };
+    } catch (error) {
+      throw new Error('Error al obtener módulos del curso: ' + error.message);
+    }
+  }
+    
 }
 
 module.exports = MatricularCursoService;
