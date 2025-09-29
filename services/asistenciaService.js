@@ -17,11 +17,11 @@ class AsistenciaService {
         }
     }
 
-    static async actualizarAsistencia(idCursosMatriculados, asistio,fecha) {
+    static async actualizarAsistencia(id, id_curso_matriculado, asistio, fecha) {
         try {
             const matricula = await asistencia.findByPk(id);
             if (!matricula) throw new Error("Matrícula no encontrada");
-            return await matricula.update({idCursosMatriculados, asistio,fecha });
+            return await matricula.update({ id_curso_matriculado, asistio, fecha });
         } catch (error) {
             throw new Error("Error al actualizar matrícula: " + error.message);
         }
@@ -34,6 +34,16 @@ class AsistenciaService {
             return await matricula.destroy();
         } catch (error) {
             throw new Error("Error al eliminar matrícula: " + error.message);
+        }
+    }
+
+    static async getAsistenciaById(id) {
+        try {
+            const result = await asistencia.findByPk(id);
+            if (!result) throw new Error("Asistencia no encontrada");
+            return result;
+        } catch (error) {
+            throw new Error("Error al buscar asistencia por ID: " + error.message);
         }
     }
 }

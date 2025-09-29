@@ -22,9 +22,9 @@ class CertificadoController {
 
     static async Update(req, res) {
         const { id } = req.params;
-        const { idCursoMatriculado, fechaEmision, urlCertificado } = req.body;
+        const { id_curso_matriculado, fecha_emision, url_certificado } = req.body;
         try {
-            const data = await CertificadoService.Update(id, idCursoMatriculado, fechaEmision, urlCertificado);
+            const data = await CertificadoService.Update(id, id_curso_matriculado, fecha_emision, url_certificado);
             res.json(data);
         } catch (error) {
             res.status(500).json({ message: "Error al actualizar certificado", error: error.message });

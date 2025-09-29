@@ -11,9 +11,9 @@ class MatricularCursoController {
     }
 
     static async crearMatricula(req, res) {
-        const { idOfertaCurso, personaInscrita } = req.body;
+        const { id_curso_oferta, id_persona } = req.body;
         try {
-            const nuevaMatricula = await matricularCursoService.crearMatricula(idOfertaCurso, personaInscrita);
+            const nuevaMatricula = await matricularCursoService.crearMatricula(id_curso_oferta, id_persona);
             res.status(201).json(nuevaMatricula);
         } catch (error) {
             res.status(400).json({ message: "Error al crear matrícula", error: error.message });
@@ -27,6 +27,17 @@ class MatricularCursoController {
             res.json({ mensaje: "Matrícula eliminada exitosamente" });
         } catch (error) {
             res.json({ message: "Error al eliminar matrícula" });
+        }
+    }
+
+    static async actualizarMatricula(req, res) {
+        const { id } = req.params;
+        const data = req.body;
+        try {
+            const matriculaActualizada = await matricularCursoService.actualizarMatricula(id, data);
+            res.status(200).json(matriculaActualizada);
+        } catch (error) {
+            res.status(400).json({ message: "Error al actualizar matrícula", error: error.message });
         }
     }
 

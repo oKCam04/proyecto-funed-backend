@@ -22,9 +22,9 @@ class AsistenciaController {
 
     static async Update(req, res) {
         const { id } = req.params;
-        const { idCursosMatriculados, asistio, fecha } = req.body;
+        const { id_curso_matriculado, asistio, fecha } = req.body;
         try {
-            const cursoActualizado = await AsistenciaService.actualizarAsistencia(id, idCursosMatriculados, asistio, fecha);
+            const cursoActualizado = await AsistenciaService.actualizarAsistencia(id, id_curso_matriculado, asistio, fecha);
             res.json(cursoActualizado);
         } catch (error) {
             res.json({ message: "Error al actualizar curso" });
@@ -38,6 +38,16 @@ class AsistenciaController {
             res.json({ mensaje: "Curso eliminado exitosamente" });
         } catch (error) {
             res.json({ message: "Error al eliminar curso" });
+        }
+    }
+
+    static async GetForId(req, res) {
+        const { id } = req.params;
+        try {
+            const asistencia = await AsistenciaService.getAsistenciaById(id);
+            res.json(asistencia);
+        } catch (error) {
+            res.json({ message: "Error al buscar asistencia por ID" });
         }
     }
     
