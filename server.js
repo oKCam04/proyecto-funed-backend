@@ -8,33 +8,32 @@ const cors = require('cors');
 const app = express();
 
 //swagger
-// const swaggerIU = require('swagger-ui-express')
-// const specs = require('./swagger/swagger.js')
+const swaggerIU = require('swagger-ui-express')
+const specs = require('./swagger/swagger.js')
+
+//cors 
+app.use(cors({ 
+    origin:"*",
+    methods:["GET","POST","PUT","DELETE","PATCH"],
+    allowedHeaders:["Content-Type","Authorization"]
+}));
 
 //express.json
 app.use(express.json());
 
-//cors 
-const corsOptions = {
-    origin: 'http://localhost:5173',
-    methods: "GET,POST,PUT,DELETE,PATCH",
-    allowedHeaders: "Content-Type,Authorization",
-    optionsSuccessStatus: 204
-};
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+
 
 
 //ruta
-// const apiRouter = require('./router/index');
-// const usuarioRouter = require('./router/usuarioRouter');
+const apiRouter = require('./router/index');
+const usuarioRouter = require('./router/usuarioRouter');
 
-// app.use('/api', apiRouter);
-// app.use('/auth', usuarioRouter)
+app.use('/api', apiRouter);
+app.use('/auth', usuarioRouter)
 
 
 //swagger json
-// app.use("/api-docs", swaggerIU.serve, swaggerIU.setup(specs))
+app.use("/api-docs", swaggerIU.serve, swaggerIU.setup(specs))
 
 
 
