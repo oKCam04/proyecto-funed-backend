@@ -40,6 +40,16 @@ class AsistenciaController {
             res.json({ message: "Error al eliminar curso" });
         }
     }
+
+    static async GetForId(req, res) {
+        const { id } = req.params;
+        try {
+            const asistencia = await AsistenciaService.getAsistenciaById(id);
+            res.json(asistencia);
+        } catch (error) {
+            res.json({ message: "Error al buscar asistencia por ID" });
+        }
+    }
     
 }
 module.exports = AsistenciaController;

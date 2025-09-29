@@ -36,6 +36,16 @@ class AsistenciaService {
             throw new Error("Error al eliminar matrícula: " + error.message);
         }
     }
+
+    static async getAsistenciaById(id) {
+        try {
+            const result = await asistencia.findByPk(id);
+            if (!result) throw new Error("Asistencia no encontrada");
+            return result;
+        } catch (error) {
+            throw new Error("Error al buscar asistencia por ID: " + error.message);
+        }
+    }
 }
 
 module.exports = AsistenciaService;

@@ -30,6 +30,17 @@ class MatricularCursoController {
         }
     }
 
+    static async actualizarMatricula(req, res) {
+        const { id } = req.params;
+        const data = req.body;
+        try {
+            const matriculaActualizada = await matricularCursoService.actualizarMatricula(id, data);
+            res.status(200).json(matriculaActualizada);
+        } catch (error) {
+            res.status(400).json({ message: "Error al actualizar matrícula", error: error.message });
+        }
+    }
+
     static async cursoMatriculadoPersona(req, res){
         const {id}=req.params;
         try{
