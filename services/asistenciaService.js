@@ -1,49 +1,60 @@
 const {asistencia}= require('../models');
 
 class AsistenciaService {
-    static async listarAsistencia() {
+    static async GetAll() {
         try {
             return await asistencia.findAll();
         } catch (error) {
-            throw new Error("Error al listar matrículas: " + error.message);
+            console.log("Error en servicio al listar asistencias:", error.message);
+            throw error;
         }
     }
 
-    static async crearAsistencia(idCursosMatriculados, asistio,fecha) {
+    static async Create({ id_curso_matriculado, asistio, fecha }) {
         try {
-            return await asistencia.create({ idCursosMatriculados, asistio,fecha });
+            return await asistencia.create({ id_curso_matriculado, asistio, fecha });
         } catch (error) {
-            throw new Error("Error al crear matrícula: " + error.message);
+            console.log("Error en servicio al crear asistencia:", error.message);
+            throw error;
         }
     }
 
-    static async actualizarAsistencia(id, id_curso_matriculado, asistio, fecha) {
+    static async Update(id, cambios) {
         try {
-            const matricula = await asistencia.findByPk(id);
-            if (!matricula) throw new Error("Matrícula no encontrada");
-            return await matricula.update({ id_curso_matriculado, asistio, fecha });
+            const data = await asistencia.findByPk(id);
+            if (!data) {
+                throw new Error(`Asistencia con id=${id} no encontrada`);
+            }
+            return await data.update(cambios);
         } catch (error) {
-            throw new Error("Error al actualizar matrícula: " + error.message);
+            console.log("Error en servicio al actualizar asistencia:", error.message);
+            throw error;
         }
     }
 
-    static async eliminarAsistencia(id) {
+    static async Delete(id) {
         try {
-            const matricula = await asistencia.findByPk(id);
-            if (!matricula) throw new Error("Matrícula no encontrada");
-            return await matricula.destroy();
+            const data = await asistencia.findByPk(id);
+            if (!data) {
+                throw new Error(`Asistencia con id=${id} no encontrada`);
+            }
+            return await data.destroy();
         } catch (error) {
-            throw new Error("Error al eliminar matrícula: " + error.message);
+            console.log("Error en servicio al eliminar asistencia:", error.message);
+            throw error;
         }
     }
 
-    static async getAsistenciaById(id) {
+    static async GetForId(id) {
         try {
-            const result = await asistencia.findByPk(id);
-            if (!result) throw new Error("Asistencia no encontrada");
-            return result;
+            const data = await asistencia.findByPk(id);
+            if (!data) {
+                throw new Error(`Asistencia con id=${id} no encontrada`);
+            }
+            return data;
         } catch (error) {
-            throw new Error("Error al buscar asistencia por ID: " + error.message);
+            console.log("Error en servicio al buscar asistencia por ID:", error.message);
+            throw error;
         }
     }
 }

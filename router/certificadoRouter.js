@@ -9,7 +9,7 @@ router.post("/certificado", aunthmiddleware, CertificadoController.Create);
 
 router.get("/certificado/:id", aunthmiddleware, CertificadoController.GetForId);
 
-router.put("/certificado/:id", CertificadoController.Update);
+router.patch("/certificado/:id", CertificadoController.Update);
 
 router.delete("/certificado/:id", CertificadoController.Delete);
 

@@ -8,6 +8,6 @@ router.post("/register", UsuarioController.register);
 
 router.get("/user", UsuarioController.getAll);
 
-router.put("/user/:id", UsuarioController.actualizarUsuario);
+router.patch("/user/:id", UsuarioController.actualizarUsuario);
 
 module.exports = router;
