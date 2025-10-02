@@ -9,14 +9,9 @@ class MatricularCursoService {
         }
     }
 
-    static async crearMatricula(idOfertaCurso, personaInscrita) {
+    static async crearMatricula(matriculaData) {
         try {
-            return await cursomatriculado.create({ 
-                id_curso_oferta: idOfertaCurso,
-                id_persona: personaInscrita,
-                estado: 'PreInscrito',
-                resultado: 'Pendiente'
-            });
+            return await cursomatriculado.create(matriculaData);
         } catch (error) {
             throw new Error("Error al crear matrícula: " + error.message);
         }

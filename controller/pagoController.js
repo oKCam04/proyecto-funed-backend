@@ -11,9 +11,8 @@ class PagoController {
     }
 
     static async Create(req, res) {
-        const { id_persona, id_curso_matriculado, forma_pago, monto, estado, fecha_pago } = req.body;
         try {
-            const data = await PagoService.Create(id_persona, id_curso_matriculado, forma_pago, monto, estado, fecha_pago);
+            const data = await PagoService.Create(req.body);
             res.json(data);
         } catch (error) {
             res.status(500).json({ message: "Error al crear", error: error.message });
