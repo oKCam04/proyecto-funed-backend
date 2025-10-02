@@ -8,7 +8,7 @@ router.post("/matriculas", CursosMatriculados.crearMatricula);
 
 router.delete("/matriculas/:id", CursosMatriculados.eliminarMatricula);
 
-router.put("/matriculas/:id", CursosMatriculados.actualizarMatricula);
+router.patch("/matriculas/:id", CursosMatriculados.actualizarMatricula);
 
 router.get("/cursosPersonas/:id", CursosMatriculados.cursoMatriculadoPersona);
 

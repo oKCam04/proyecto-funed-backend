@@ -8,7 +8,7 @@ router.post("/ofertaCursos", ofertaCursosController.crearOfertaCurso);
 
 router.get("/ofertaCursos/:id", ofertaCursosController.obtenerOfertaCursoPorId);
 
-router.put("/ofertaCursos/:id", ofertaCursosController.actualizarOfertaCurso);
+router.patch("/ofertaCursos/:id", ofertaCursosController.actualizarOfertaCurso);
 
 router.delete("/ofertaCursos/:id", ofertaCursosController.eliminarOfertaCurso);
 

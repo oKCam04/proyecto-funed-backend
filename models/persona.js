@@ -22,10 +22,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id_persona',
         as: 'cursosMatriculados'
       });
-      persona.hasMany(models.pago,{
+      persona.hasMany(models.pago, {
         foreignKey: 'id_persona',
         as: 'pagos'
-      })
+      });
+      persona.hasMany(models.asistencia, {
+        foreignKey: 'id_persona',
+        as: 'asistencias'
+      });
     }
   }
   persona.init({

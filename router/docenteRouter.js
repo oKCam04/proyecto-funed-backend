@@ -6,7 +6,7 @@ router.get("/docente", DocenteController.listarDocentes);
 
 router.post("/docente", DocenteController.crearDocente);
 
-router.put("/docente/:id", DocenteController.actualizarDocente);
+router.patch("/docente/:id", DocenteController.actualizarDocente);
 
 router.delete("/docente/:id", DocenteController.eliminarDocente);
 

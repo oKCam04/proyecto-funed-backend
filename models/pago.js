@@ -27,7 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     forma_pago: DataTypes.STRING,
     monto: DataTypes.INTEGER,
     estado: DataTypes.STRING,
-    fecha_pago: DataTypes.DATE
+    fecha_pago: DataTypes.DATE,
+    comprobante: DataTypes.STRING,
+    referencia: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'pago',

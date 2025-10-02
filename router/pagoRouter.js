@@ -5,11 +5,11 @@ const aunthmiddleware = require('../middlewares/auth.middleware');
 
 router.get("/pago", PagoController.GetAll);
 
-router.post("/pago", aunthmiddleware, PagoController.Create);
+router.post("/pago", PagoController.Create);
 
-router.get("/pago/:id", aunthmiddleware, PagoController.GetForId);
+router.get("/pago/:id", PagoController.GetForId);
 
-router.put("/pago/:id", PagoController.Update);
+router.patch("/pago/:id", PagoController.Update);
 
 router.delete("/pago/:id", PagoController.Delete);
 

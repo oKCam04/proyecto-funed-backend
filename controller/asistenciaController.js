@@ -3,53 +3,51 @@ const AsistenciaService = require('../services/asistenciaService');
 class AsistenciaController {
     static async GetAll(req, res) {
         try {
-            const asistencia = await AsistenciaService.listarAsistencia();
-            res.json(asistencia);
+            const data = await AsistenciaService.GetAll();
+            res.json(data);
         } catch (error) {
-            res.json({ message: "Error al listar cursos", error:error.message });
+            res.status(500).json({ message: "Error al listar asistencias", error: error.message });
         }
     }
 
     static async Create(req, res) {
-        const { idCursosMatriculados, asistio, fecha } = req.body;
         try {
-            const nuevoCurso = await AsistenciaService.crearAsistencia(idCursosMatriculados, asistio, fecha);
-            res.json(req.body);
+            const data = await AsistenciaService.Create(req.body);
+            res.status(201).json(data);
         } catch (error) {
-            res.json({ message: "Error al crear curso" });
+            res.status(500).json({ message: "Error al crear asistencia", error: error.message });
         }
     }
 
     static async Update(req, res) {
         const { id } = req.params;
-        const { id_curso_matriculado, asistio, fecha } = req.body;
         try {
-            const cursoActualizado = await AsistenciaService.actualizarAsistencia(id, id_curso_matriculado, asistio, fecha);
-            res.json(cursoActualizado);
+            const data = await AsistenciaService.Update(id, req.body);
+            res.json(data);
         } catch (error) {
-            res.json({ message: "Error al actualizar curso" });
+            res.status(500).json({ message: "Error al actualizar asistencia", error: error.message });
         }
     }
 
     static async Delete(req, res) {
         const { id } = req.params;
         try {
-            await AsistenciaService.eliminarAsistencia(id);
-            res.json({ mensaje: "Curso eliminado exitosamente" });
+            await AsistenciaService.Delete(id);
+            res.json({ mensaje: "Asistencia eliminada exitosamente" });
         } catch (error) {
-            res.json({ message: "Error al eliminar curso" });
+            res.status(500).json({ message: "Error al eliminar asistencia", error: error.message });
         }
     }
 
     static async GetForId(req, res) {
         const { id } = req.params;
         try {
-            const asistencia = await AsistenciaService.getAsistenciaById(id);
-            res.json(asistencia);
+            const data = await AsistenciaService.GetForId(id);
+            res.json(data);
         } catch (error) {
-            res.json({ message: "Error al buscar asistencia por ID" });
+            res.status(500).json({ message: "Error al buscar asistencia por ID", error: error.message });
         }
     }
-    
 }
+
 module.exports = AsistenciaController;
