@@ -9,7 +9,7 @@ router.post("/cursos", aunthmiddleware, cursosController.crearCurso);
 
 router.get("/cursos/:id", aunthmiddleware, cursosController.buscarCursoPorId);
 
-router.put("/cursos/:id", cursosController.actualizarCurso);
+router.patch("/cursos/:id", cursosController.actualizarCurso);
 
 router.delete("/cursos/:id", cursosController.eliminarCurso);
 

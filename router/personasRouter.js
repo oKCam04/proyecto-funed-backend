@@ -8,7 +8,7 @@ router.post("/personas", personasController.crearPersona);
 
 router.get("/personas/:id", personasController.buscarPersonaPorId);
 
-router.put("/personas/:id", personasController.actualizarPersona);
+router.patch("/personas/:id", personasController.actualizarPersona);
 
 router.delete("/personas/:id", personasController.eliminarPersona);
 

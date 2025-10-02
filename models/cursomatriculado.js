@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
   cursomatriculado.init({
     id_curso_oferta: DataTypes.INTEGER,
     id_persona: DataTypes.INTEGER,
-    estado: DataTypes.ENUM('PreInscrito', 'Matriculado', 'Cancelado', 'Finalizado'),
+    estado: DataTypes.ENUM('Preinscrito', 'Activo', 'Finalizado', 'Cancelado'),
     resultado: DataTypes.ENUM('Aprobado', 'Reprobado', 'Pendiente')
   }, {
     sequelize,
