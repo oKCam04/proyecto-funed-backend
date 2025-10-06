@@ -15,10 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'id_curso',
         as: 'ofertasCursos'
       });
-      curso.hasMany(models.modulo,{
-        foreignKey: 'id_curso',
-        as: 'modulos'
-      })
+    
     }
   }
   curso.init({
