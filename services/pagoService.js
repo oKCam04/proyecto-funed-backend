@@ -1,9 +1,36 @@
-const { pago } = require('../models');
+const { pago, persona, cursomatriculado, ofertacurso, curso } = require('../models');
 
 class PagoService {
     static async GetAll() {
         try {
-            return await pago.findAll();
+            return await pago.findAll({
+                include: [
+                    {
+                        model: persona,
+                        as: 'persona',
+                        attributes: ['id', 'nombre', 'apellido', 'numero_identificacion', 'correo', 'telefono']
+                    },
+                    {
+                        model: cursomatriculado,
+                        as: 'cursoMatriculado',
+                        attributes: ['id', 'estado', 'resultado', 'id_curso_oferta', 'id_persona'],
+                        include: [
+                            {
+                                model: ofertacurso,
+                                as: 'curso',
+                                attributes: ['id', 'codigo_curso', 'fecha_inicio_curso', 'fecha_fin_curso', 'horario', 'precio'],
+                                include: [
+                                    {
+                                        model: curso,
+                                        as: 'curso',
+                                        attributes: ['id', 'nombre_curso', 'duracion', 'tipo_curso']
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
         } catch (error) {
             console.log("Error en servicio al listar pagos:", error.message);
             throw error;
@@ -47,7 +74,34 @@ class PagoService {
 
     static async GetForId(id) {
         try {
-            const datos = await pago.findByPk(id);
+            const datos = await pago.findByPk(id, {
+                include: [
+                    {
+                        model: persona,
+                        as: 'persona',
+                        attributes: ['id', 'nombre', 'apellido', 'numero_identificacion', 'correo', 'telefono']
+                    },
+                    {
+                        model: cursomatriculado,
+                        as: 'cursoMatriculado',
+                        attributes: ['id', 'estado', 'resultado', 'id_curso_oferta', 'id_persona'],
+                        include: [
+                            {
+                                model: ofertacurso,
+                                as: 'curso',
+                                attributes: ['id', 'codigo_curso', 'fecha_inicio_curso', 'fecha_fin_curso', 'horario', 'precio'],
+                                include: [
+                                    {
+                                        model: curso,
+                                        as: 'curso',
+                                        attributes: ['id', 'nombre_curso', 'duracion', 'tipo_curso']
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
             if (!datos) {
                 throw new Error(`Pago con id=${id} no encontrado`);
             }
