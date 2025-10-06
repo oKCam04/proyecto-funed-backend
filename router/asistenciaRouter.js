@@ -12,6 +12,9 @@ router.post("/asistencia", AsistenciaController.Create);
 // Obtener una asistencia por ID
 router.get("/asistencia/:id", AsistenciaController.GetForId);
 
+// Obtener asistencias de una persona por curso matriculado
+router.get("/asistencia/persona/:id_persona/curso/:id_curso_matriculado", AsistenciaController.GetForPersonaCurso);
+
 // Actualizar una asistencia
 router.patch("/asistencia/:id", AsistenciaController.Update);
 
