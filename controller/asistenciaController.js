@@ -48,6 +48,16 @@ class AsistenciaController {
             res.status(500).json({ message: "Error al buscar asistencia por ID", error: error.message });
         }
     }
+
+    static async GetForPersonaCurso(req, res) {
+        const { id_persona, id_curso_matriculado } = req.params;
+        try {
+            const data = await AsistenciaService.GetForPersonaCurso(id_persona, id_curso_matriculado);
+            res.status(200).json({ mensaje: 'Asistencias obtenidas correctamente', asistencias: data });
+        } catch (error) {
+            res.status(500).json({ message: 'Error al obtener asistencias por persona y curso matriculado', error: error.message });
+        }
+    }
 }
 
 module.exports = AsistenciaController;
