@@ -1,4 +1,4 @@
-const { modulo } = require('../models');
+const { modulo, modulodocente } = require('../models');
 
 class ModuloService {
     static async listarModulos() {
@@ -53,6 +53,32 @@ class ModuloService {
             return moduloEncontrado;
         } catch (error) {
             throw new Error("Error al buscar modulo por ID: " + error.message);
+        }
+    }
+
+    static async listarModulosPorOfertaCurso(id_oferta_curso) {
+        try {
+            const registros = await modulodocente.findAll({
+                where: { id_oferta_curso },
+                include: [{
+                    model: modulo,
+                    as: 'modulo',
+                    attributes: ['id', 'nombre']
+                }]
+            });
+
+            // Deduplicar por id de módulo y devolver solo datos del módulo
+            const vistos = new Set();
+            const modulos = [];
+            for (const r of registros) {
+                if (r.modulo && !vistos.has(r.modulo.id)) {
+                    vistos.add(r.modulo.id);
+                    modulos.push({ id: r.modulo.id, nombre: r.modulo.nombre });
+                }
+            }
+            return modulos;
+        } catch (error) {
+            throw new Error("Error al obtener módulos por oferta de curso: " + error.message);
         }
     }
 }

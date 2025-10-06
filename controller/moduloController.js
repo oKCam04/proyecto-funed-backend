@@ -48,5 +48,15 @@ class ModuloController {
             res.json({ message: "Error al buscar modulo por ID" });
         }
     }
+
+    static async obtenerModulosPorOfertaCurso(req, res) {
+        const { id_oferta_curso } = req.params;
+        try {
+            const modulos = await ModuloService.listarModulosPorOfertaCurso(id_oferta_curso);
+            res.status(200).json({ mensaje: "Módulos obtenidos correctamente", modulos });
+        } catch (error) {
+            res.status(500).json({ mensaje: "Error al obtener módulos por oferta de curso", error: error.message });
+        }
+    }
 }
 module.exports = ModuloController;
