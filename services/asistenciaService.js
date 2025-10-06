@@ -57,6 +57,18 @@ class AsistenciaService {
             throw error;
         }
     }
+
+    static async GetForPersonaCurso(id_persona, id_curso_matriculado) {
+        try {
+            return await asistencia.findAll({
+                where: { id_persona, id_curso_matriculado },
+                order: [['fecha', 'ASC']]
+            });
+        } catch (error) {
+            console.log("Error en servicio al listar asistencias por persona y curso:", error.message);
+            throw error;
+        }
+    }
 }
 
 module.exports = AsistenciaService;
