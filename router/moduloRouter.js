@@ -12,4 +12,7 @@ router.patch("/modulos/:id", moduloController.actualizarModulo);
 
 router.delete("/modulos/:id", moduloController.eliminarModulo);
 
+// Obtener módulos asociados a una oferta de curso específica
+router.get("/modulos/oferta/:id_oferta_curso", moduloController.obtenerModulosPorOfertaCurso);
+
 module.exports = router;
