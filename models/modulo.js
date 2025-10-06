@@ -11,10 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      modulo.belongsTo(models.curso, {
-        foreignKey: 'id_curso',
-        as: 'curso'
-      });
+  
       modulo.hasMany(models.modulodocente, {
         foreignKey: 'id_modulo',
         as: 'modulosDocente'
@@ -22,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   modulo.init({
-    nombre: DataTypes.STRING,
-    id_curso: DataTypes.INTEGER
+    nombre: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'modulo',
