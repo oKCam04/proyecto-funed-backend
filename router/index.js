@@ -11,6 +11,7 @@ const cursosMatriculadosRouter = require('./matricularCursosRouter');
 const documentoRouter = require('./documentoRouter');
 const asistenciaRouter=require('./asistenciaRouter');
 const moduloRouter = require('./moduloRouter');
+const calificacionesRouter = require('./calificacionesRouter');
 
 router.use(personasRouter);
 router.use(cursosRouter);
@@ -22,5 +23,6 @@ router.use(cursosMatriculadosRouter);
 router.use(documentoRouter);
 router.use(asistenciaRouter);
 router.use(moduloRouter);
+router.use(calificacionesRouter);
 
 module.exports = router;
