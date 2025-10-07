@@ -15,27 +15,19 @@ class PersonasController {
     static async crearPersona(req, res) {
         const { nombre, apellido, numero_identificacion, tipo_identificacion, fecha_nacimiento, telefono, correo, rol } = req.body;
         try {
-            const nuevaPersona = await PersonasService.crearPersona(nombre, apellido, numero_identificacion, tipo_identificacion, fecha_nacimiento, telefono, correo, rol);
+            const nuevaPersona = await PersonasService.crearPersona(
+                nombre,
+                apellido,
+                numero_identificacion,
+                tipo_identificacion,
+                fecha_nacimiento,
+                telefono,
+                correo,
+                rol
+            );
 
-            // Auto-crear usuario para login: email = correo, password = numero_identificacion
-            try {
-                await UsuarioService.register(nuevaPersona.id, correo, numero_identificacion);
-            } catch (e) {
-                console.warn('[PersonasController] No se pudo auto-crear usuario:', e.message);
-            }
-
-            // Enviar correo con credenciales
-            try {
-                await EmailService.sendWelcomeOnRegistration({
-                    to: correo,
-                    nombre,
-                    email: correo,
-                    numero_identificacion
-                });
-            } catch (e) {
-                console.warn('[PersonasController] Envío de correo falló:', e.message);
-            }
-
+            // Flujo desacoplado: creación de usuario y envío de correo se realizan desde el frontend
+            // vía /auth/register y /api/email/send-welcome respectivamente.
             res.json(nuevaPersona);
         } catch (error) {
             res.json({ message: "Error al crear persona" });
