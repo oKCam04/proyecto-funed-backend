@@ -13,6 +13,7 @@ const asistenciaRouter=require('./asistenciaRouter');
 const moduloRouter = require('./moduloRouter');
 const calificacionesRouter = require('./calificacionesRouter');
 const contenidoApoyoRouter = require('./contenidoApoyoRouter');
+const emailRouter = require('./emailRouter');
 
 router.use(personasRouter);
 router.use(cursosRouter);
@@ -26,5 +27,6 @@ router.use(asistenciaRouter);
 router.use(moduloRouter);
 router.use(calificacionesRouter);
 router.use(contenidoApoyoRouter);
+router.use(emailRouter);
 
 module.exports = router;
