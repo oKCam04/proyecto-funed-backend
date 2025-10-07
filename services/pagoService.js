@@ -18,7 +18,7 @@ class PagoService {
                             {
                                 model: ofertacurso,
                                 as: 'curso',
-                                attributes: ['id', 'codigo_curso', 'fecha_inicio_curso', 'fecha_fin_curso', 'horario', 'precio'],
+                                attributes: ['id', 'codigo_curso', 'fecha_inicio_curso', 'fecha_fin_curso', 'horario', 'cupos', 'precio'],
                                 include: [
                                     {
                                         model: curso,
@@ -89,7 +89,7 @@ class PagoService {
                             {
                                 model: ofertacurso,
                                 as: 'curso',
-                                attributes: ['id', 'codigo_curso', 'fecha_inicio_curso', 'fecha_fin_curso', 'horario', 'precio'],
+                                attributes: ['id', 'codigo_curso', 'fecha_inicio_curso', 'fecha_fin_curso', 'horario', 'cupos', 'precio'],
                                 include: [
                                     {
                                         model: curso,
