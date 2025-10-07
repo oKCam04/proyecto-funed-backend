@@ -60,6 +60,8 @@ class ModuloService {
         try {
             const registros = await modulodocente.findAll({
                 where: { id_oferta_curso },
+                // Limitar atributos para evitar seleccionar columnas inexistentes como 'resultado'
+                attributes: ['id', 'id_modulo', 'id_oferta_curso'],
                 include: [{
                     model: modulo,
                     as: 'modulo',
