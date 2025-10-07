@@ -1,4 +1,4 @@
-const {docente} = require('../models');
+const {docente, persona} = require('../models');
 
 class DocentesService {
     static async listarDocentes() {
@@ -10,9 +10,34 @@ class DocentesService {
         }
     }
 
+    static async obtenerDocentePorId(id) {
+        try {
+            const d = await docente.findByPk(id);
+            if (!d) {
+                throw new Error('Docente no encontrado');
+            }
+            return d;
+        } catch (error) {
+            console.log("Error en servicio al obtener docente por id"+ (error?.message ? `: ${error.message}` : ''));
+            throw error;
+        }
+    }
+
     static async crearDocente(id_persona, especialidad, fecha_contratacion, fecha_terminacion) {
         try {
-            return await docente.create({ id_persona, especialidad, fecha_contratacion, fecha_terminacion });
+            const nuevo = await docente.create({ id_persona, especialidad, fecha_contratacion, fecha_terminacion });
+            // Al crear un docente, actualizar el rol de la persona a 'Docente'
+            try {
+                if (id_persona) {
+                    const p = await persona.findByPk(id_persona);
+                    if (p) {
+                        await p.update({ rol: 'Docente' });
+                    }
+                }
+            } catch (sideErr) {
+                console.log("Advertencia: no se pudo actualizar el rol de la persona a Docente", sideErr?.message || sideErr);
+            }
+            return nuevo;
         } catch (error) {
             console.log("Error en servicio al crear docente"+error.message);
         }

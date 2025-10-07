@@ -1,4 +1,4 @@
-const { modulo, modulodocente } = require('../models');
+const { modulo, modulodocente, docente, persona } = require('../models');
 
 class ModuloService {
     static async listarModulos() {
@@ -62,11 +62,25 @@ class ModuloService {
                 where: { id_oferta_curso },
                 // Limitar atributos para evitar seleccionar columnas inexistentes como 'resultado'
                 attributes: ['id', 'id_modulo', 'id_oferta_curso'],
-                include: [{
-                    model: modulo,
-                    as: 'modulo',
-                    attributes: ['id', 'nombre']
-                }]
+                include: [
+                    {
+                        model: modulo,
+                        as: 'modulo',
+                        attributes: ['id', 'nombre']
+                    },
+                    {
+                        model: docente,
+                        as: 'docente',
+                        attributes: ['id', 'id_persona'],
+                        include: [
+                            {
+                                model: persona,
+                                as: 'persona',
+                                attributes: ['id', 'nombre', 'apellido']
+                            }
+                        ]
+                    }
+                ]
             });
 
             // Deduplicar por id de módulo y devolver solo datos del módulo
@@ -75,7 +89,15 @@ class ModuloService {
             for (const r of registros) {
                 if (r.modulo && !vistos.has(r.modulo.id)) {
                     vistos.add(r.modulo.id);
-                    modulos.push({ id: r.modulo.id, nombre: r.modulo.nombre });
+                    const fullName = r.docente?.persona
+                        ? `${r.docente.persona.nombre} ${r.docente.persona.apellido}`
+                        : null;
+                    modulos.push({
+                        id: r.modulo.id,
+                        nombre: r.modulo.nombre,
+                        docenteId: r.docente?.id || null,
+                        docenteNombre: fullName
+                    });
                 }
             }
             return modulos;
