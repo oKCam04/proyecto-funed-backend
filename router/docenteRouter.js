@@ -4,6 +4,8 @@ const DocenteController = require('../controller/docenteController');
 
 router.get("/docente", DocenteController.listarDocentes);
 
+router.get("/docente/:id", DocenteController.obtenerDocentePorId);
+
 router.post("/docente", DocenteController.crearDocente);
 
 router.patch("/docente/:id", DocenteController.actualizarDocente);

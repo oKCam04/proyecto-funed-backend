@@ -10,6 +10,21 @@ class DocenteController {
             res.status(500).json({ message: "Error al listar docentes" });
         }
     }  
+
+    static async obtenerDocentePorId(req, res) {
+        const { id } = req.params;
+        try {
+            const docente = await docenteService.obtenerDocentePorId(id);
+            if (!docente) {
+                return res.status(404).json({ message: "Docente no encontrado" });
+            }
+            res.status(200).json(docente);
+        } catch (error) {
+            console.error("Error al obtener docente:", error);
+            const status = (/no encontrado/i.test(error?.message || '')) ? 404 : 500;
+            res.status(status).json({ message: "Error al obtener docente" });
+        }
+    }
     static async crearDocente(req, res) {
         const { id_persona, especialidad, fecha_contratacion, fecha_terminacion } = req.body;
         try {
