@@ -10,6 +10,19 @@ class DocentesService {
         }
     }
 
+    static async obtenerDocentePorId(id) {
+        try {
+            const d = await docente.findByPk(id);
+            if (!d) {
+                throw new Error('Docente no encontrado');
+            }
+            return d;
+        } catch (error) {
+            console.log("Error en servicio al obtener docente por id"+ (error?.message ? `: ${error.message}` : ''));
+            throw error;
+        }
+    }
+
     static async crearDocente(id_persona, especialidad, fecha_contratacion, fecha_terminacion) {
         try {
             return await docente.create({ id_persona, especialidad, fecha_contratacion, fecha_terminacion });
