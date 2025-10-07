@@ -25,6 +25,22 @@ class DocenteController {
             res.status(status).json({ message: "Error al obtener docente" });
         }
     }
+
+    // Obtener docente por id_persona, incluyendo todos los datos de la persona
+    static async obtenerDocentePorIdPersona(req, res) {
+        const { id_persona } = req.params;
+        try {
+            const docente = await docenteService.obtenerDocentePorIdPersona(id_persona);
+            if (!docente) {
+                return res.status(404).json({ message: "Docente no encontrado" });
+            }
+            res.status(200).json(docente);
+        } catch (error) {
+            console.error("Error al obtener docente por id_persona:", error);
+            const status = (/no encontrado/i.test(error?.message || '')) ? 404 : 500;
+            res.status(status).json({ message: "Error al obtener docente por id_persona" });
+        }
+    }
     static async crearDocente(req, res) {
         const { id_persona, especialidad, fecha_contratacion, fecha_terminacion } = req.body;
         try {

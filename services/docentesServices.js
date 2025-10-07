@@ -3,7 +3,13 @@ const {docente, persona} = require('../models');
 class DocentesService {
     static async listarDocentes() {
         try {
-            return await docente.findAll();
+            return await docente.findAll({
+                include: [{
+                    model: persona,
+                    as: 'persona',
+                    attributes: ['id','nombre','apellido','numero_identificacion','tipo_identificacion','fecha_nacimiento','telefono','correo','rol']
+                }]
+            });
         } catch (error) {
             console.log("Error en servicio al listar docentes");
             
@@ -12,13 +18,40 @@ class DocentesService {
 
     static async obtenerDocentePorId(id) {
         try {
-            const d = await docente.findByPk(id);
+            const d = await docente.findByPk(id, {
+                include: [{
+                    model: persona,
+                    as: 'persona',
+                    attributes: ['id','nombre','apellido','numero_identificacion','tipo_identificacion','fecha_nacimiento','telefono','correo','rol']
+                }]
+            });
             if (!d) {
                 throw new Error('Docente no encontrado');
             }
             return d;
         } catch (error) {
             console.log("Error en servicio al obtener docente por id"+ (error?.message ? `: ${error.message}` : ''));
+            throw error;
+        }
+    }
+
+    // Obtener docente por id_persona con información completa de la persona
+    static async obtenerDocentePorIdPersona(id_persona) {
+        try {
+            const d = await docente.findOne({
+                where: { id_persona },
+                include: [{
+                    model: persona,
+                    as: 'persona',
+                    attributes: ['id','nombre','apellido','numero_identificacion','tipo_identificacion','fecha_nacimiento','telefono','correo','rol']
+                }]
+            });
+            if (!d) {
+                throw new Error('Docente no encontrado para la persona indicada');
+            }
+            return d;
+        } catch (error) {
+            console.log("Error en servicio al obtener docente por id_persona"+ (error?.message ? `: ${error.message}` : ''));
             throw error;
         }
     }
