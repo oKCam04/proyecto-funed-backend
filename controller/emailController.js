@@ -6,7 +6,11 @@ class EmailController {
   // Endpoint desacoplado: recibe email y número de identificación desde el front
   static async sendWelcome(req, res) {
     try {
-      const { email, numero_identificacion, nombre } = req.body;
+      // Acepta alias comunes para mayor robustez
+      const email = req.body?.email ?? req.body?.correo ?? req.body?.usuario;
+      const numero_identificacion = req.body?.numero_identificacion ?? req.body?.cedula;
+      const nombre = req.body?.nombre ?? req.body?.name ?? '';
+
       if (!email || !numero_identificacion) {
         return res.status(400).json({ message: 'email y numero_identificacion son requeridos' });
       }
