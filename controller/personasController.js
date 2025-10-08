@@ -1,6 +1,7 @@
 const PersonasService = require("../services/personasService");
 const UsuarioService = require("../services/usuarioServices");
 const EmailService = require("../services/emailService");
+const MatricularCursoService = require("../services/cursoMatriculadoService");
 
 class PersonasController {
     static async listarPersonas(req, res) {
@@ -9,6 +10,17 @@ class PersonasController {
             res.json(personasLista);
         } catch (error) {
             res.json({ message: "Error al listar personas" });
+        }
+    }
+
+    // Listar personas matriculadas activas por oferta de curso
+    static async listarPersonasActivasPorOferta(req, res) {
+        const { id_oferta_curso } = req.params;
+        try {
+            const personas = await MatricularCursoService.listarPersonasActivasPorOferta(Number(id_oferta_curso));
+            res.status(200).json({ mensaje: "Personas activas listadas correctamente", personas });
+        } catch (error) {
+            res.status(500).json({ mensaje: "Error al listar personas activas por oferta", error: error.message });
         }
     }
 
