@@ -10,6 +10,19 @@ class ModuloDocenteController {
       res.status(500).json({ mensaje: 'Error al obtener módulo-docente por oferta de curso', error: error.message });
     }
   }
+
+  static async crearAsignacion(req, res) {
+    try {
+      const { id_modulo, id_docente, id_oferta_curso } = req.body;
+      if (!id_modulo || !id_docente || !id_oferta_curso) {
+        return res.status(400).json({ mensaje: 'id_modulo, id_docente e id_oferta_curso son requeridos' });
+      }
+      const asignacion = await ModuloDocenteService.crearAsignacion({ id_modulo, id_docente, id_oferta_curso });
+      return res.status(201).json({ mensaje: 'Asignación creada', asignacion });
+    } catch (error) {
+      return res.status(500).json({ mensaje: 'Error al crear asignación módulo-docente', error: error.message });
+    }
+  }
 }
 
 module.exports = ModuloDocenteController;
