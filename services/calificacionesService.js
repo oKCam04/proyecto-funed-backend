@@ -1,4 +1,5 @@
 const { modulo, notas_modulo, cursomatriculado, persona, ofertacurso } = require('../models');
+const { Op } = require('sequelize');
 
 class CalificacionesService {
   
@@ -103,13 +104,16 @@ class CalificacionesService {
       // Buscar todas las matrículas para la oferta
       const matriculas = await cursomatriculado.findAll({
         where: { id_curso_oferta: id_oferta_curso },
-        include: [{ model: persona, as: 'persona', attributes: ['id', 'nombre', 'apellido', 'correo', 'telefono', 'tipoIdentificacion'] }],
+        include: [{ model: persona, as: 'persona', attributes: ['id', 'nombre', 'apellido', 'correo', 'telefono', 'tipo_identificacion'] }],
       });
       const matriculaIds = matriculas.map(m => m.id);
       if (matriculaIds.length === 0) return [];
 
       const notas = await notas_modulo.findAll({
-        where: { id_modulo, id_curso_matriculado: matriculaIds },
+        where: {
+          id_modulo,
+          id_curso_matriculado: { [Op.in]: matriculaIds },
+        },
       });
 
       // Mapear por id_curso_matriculado para rápido acceso
