@@ -11,17 +11,26 @@ class EmailController {
         return res.status(400).json({ message: 'email y numero_identificacion son requeridos' });
       }
 
-      const result = await EmailService.sendWelcomeOnRegistration({
+      // Dispara el envío en background para no bloquear el request del front
+      EmailService.sendWelcomeOnRegistration({
         to: email,
         nombre,
         email,
         numero_identificacion,
-      });
+      })
+        .then((result) => {
+          if (result?.sent) {
+            console.log('[Email] Bienvenida enviada', { messageId: result.messageId, to: email });
+          } else {
+            console.warn('[Email] Bienvenida no enviada', { reason: result?.reason, to: email });
+          }
+        })
+        .catch((err) => {
+          console.error('[Email] Error al enviar bienvenida', err?.message || err);
+        });
 
-      if (result.sent) {
-        return res.json({ message: 'Correo de bienvenida enviado', messageId: result.messageId });
-      }
-      return res.status(500).json({ message: 'No se pudo enviar el correo', reason: result.reason });
+      // Responde inmediatamente para evitar timeouts en el cliente
+      return res.json({ message: 'Solicitud de envío de bienvenida recibida' });
     } catch (error) {
       res.status(500).json({ message: 'Error al enviar correo de bienvenida', error: error.message });
     }

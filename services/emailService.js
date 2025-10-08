@@ -24,6 +24,10 @@ async function sendWelcomeOnRegistration({ to, nombre, email, numero_identificac
     port: SMTP_PORT,
     secure: SMTP_PORT === 465,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    // Evita bloqueos prolongados si el servidor SMTP no responde
+    connectionTimeout: 10000, // tiempo máximo para conectar (ms)
+    greetingTimeout: 10000,   // tiempo máximo esperando el saludo del servidor (ms)
+    socketTimeout: 10000,     // tiempo máximo de inactividad en el socket (ms)
   });
 
   const from = `${MAIL_FROM_NAME} <${MAIL_FROM}>`;
@@ -55,6 +59,10 @@ async function sendPaymentApproved({ to, nombre, curso }) {
     port: SMTP_PORT,
     secure: SMTP_PORT === 465,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    // Evita bloqueos prolongados si el servidor SMTP no responde
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
   });
 
   const from = `${MAIL_FROM_NAME} <${MAIL_FROM}>`;
