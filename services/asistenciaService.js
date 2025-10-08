@@ -10,9 +10,9 @@ class AsistenciaService {
         }
     }
 
-    static async Create({ id_curso_matriculado, asistio, fecha }) {
+    static async Create({ id_curso_matriculado, id_persona, asistio, fecha }) {
         try {
-            return await asistencia.create({ id_curso_matriculado, asistio, fecha });
+            return await asistencia.create({ id_curso_matriculado, id_persona, asistio, fecha });
         } catch (error) {
             console.log("Error en servicio al crear asistencia:", error.message);
             throw error;
