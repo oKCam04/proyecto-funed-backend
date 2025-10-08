@@ -58,5 +58,25 @@ class ModuloController {
             res.status(500).json({ mensaje: "Error al obtener módulos por oferta de curso", error: error.message });
         }
     }
+
+    static async obtenerModulosPorDocentePersona(req, res) {
+        const { id_persona } = req.params;
+        try {
+            const cursos = await ModuloService.listarModulosPorDocentePersona(id_persona);
+            res.status(200).json({ mensaje: "Módulos por curso del docente obtenidos", cursos });
+        } catch (error) {
+            res.status(500).json({ mensaje: "Error al obtener módulos por docente", error: error.message });
+        }
+    }
+
+    static async obtenerModulosPorDocenteOferta(req, res) {
+        const { id_persona, id_oferta_curso } = req.params;
+        try {
+            const modulos = await ModuloService.listarModulosPorDocenteOferta(id_persona, id_oferta_curso);
+            res.status(200).json({ mensaje: "Módulos del docente para la oferta obtenidos", modulos });
+        } catch (error) {
+            res.status(500).json({ mensaje: "Error al obtener módulos por docente y oferta", error: error.message });
+        }
+    }
 }
 module.exports = ModuloController;
