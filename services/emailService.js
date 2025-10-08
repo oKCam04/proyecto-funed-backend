@@ -1,36 +1,23 @@
 'use strict';
 
-const nodemailer = require('nodemailer');
+const sgMail = require('@sendgrid/mail');
 
-const SMTP_HOST = process.env.SMTP_HOST;
-const SMTP_PORT = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : undefined;
-const SMTP_USER = process.env.SMTP_USER;
-const SMTP_PASS = process.env.SMTP_PASS;
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 const MAIL_FROM = process.env.MAIL_FROM || 'no-reply@funed.local';
 const MAIL_FROM_NAME = process.env.MAIL_FROM_NAME || 'FUNED';
 const APP_URL = process.env.APP_URL || '';
 
-function assertSmtpConfig() {
-  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
-    throw new Error('SMTP config faltante. Define SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS');
+function assertSendgridConfig() {
+  if (!SENDGRID_API_KEY) {
+    throw new Error('Falta SENDGRID_API_KEY en variables de entorno');
   }
 }
 
+// Inicializa SendGrid una sola vez
+assertSendgridConfig();
+sgMail.setApiKey(SENDGRID_API_KEY);
+
 async function sendWelcomeOnRegistration({ to, nombre, email, numero_identificacion }) {
-  assertSmtpConfig();
-
-  const transport = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_PORT === 465,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-    // Evita bloqueos prolongados si el servidor SMTP no responde
-    connectionTimeout: 10000, // tiempo máximo para conectar (ms)
-    greetingTimeout: 10000,   // tiempo máximo esperando el saludo del servidor (ms)
-    socketTimeout: 10000,     // tiempo máximo de inactividad en el socket (ms)
-  });
-
-  const from = `${MAIL_FROM_NAME} <${MAIL_FROM}>`;
   const subject = 'Bienvenido a FUNED - Acceso y credenciales';
   const safeEmail = String(email || '');
   const safeCedula = String(numero_identificacion || '');
@@ -54,25 +41,20 @@ async function sendWelcomeOnRegistration({ to, nombre, email, numero_identificac
     </div>
   `;
 
-  const info = await transport.sendMail({ from, to, subject, text, html });
-  return { sent: true, messageId: info.messageId };
+  const msg = {
+    to,
+    from: { email: MAIL_FROM, name: MAIL_FROM_NAME },
+    subject,
+    text,
+    html,
+  };
+
+  const [response] = await sgMail.send(msg);
+  const messageId = response?.headers?.['x-message-id'] || response?.headers?.['X-Message-Id'] || null;
+  return { sent: true, messageId };
 }
 
 async function sendPaymentApproved({ to, nombre, curso }) {
-  assertSmtpConfig();
-
-  const transport = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_PORT === 465,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-    // Evita bloqueos prolongados si el servidor SMTP no responde
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
-  });
-
-  const from = `${MAIL_FROM_NAME} <${MAIL_FROM}>`;
   const subject = 'Pago aprobado - Acceso al curso';
   const accesoTexto = APP_URL ? `Ingresa al aplicativo: ${APP_URL}` : 'Ingresa al aplicativo para acceder a tu curso.';
   const text = `Hola ${nombre || ''},\n\nTu pago para el curso "${curso}" ha sido aprobado.\n\n${accesoTexto}\n\nÉxitos en tu proceso de formación.\n\nEquipo FUNED`;
@@ -89,8 +71,17 @@ async function sendPaymentApproved({ to, nombre, curso }) {
     </div>
   `;
 
-  const info = await transport.sendMail({ from, to, subject, text, html });
-  return { sent: true, messageId: info.messageId };
+  const msg = {
+    to,
+    from: { email: MAIL_FROM, name: MAIL_FROM_NAME },
+    subject,
+    text,
+    html,
+  };
+
+  const [response] = await sgMail.send(msg);
+  const messageId = response?.headers?.['x-message-id'] || response?.headers?.['X-Message-Id'] || null;
+  return { sent: true, messageId };
 }
 
 module.exports = { sendWelcomeOnRegistration, sendPaymentApproved };
