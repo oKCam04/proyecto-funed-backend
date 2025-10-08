@@ -31,17 +31,24 @@ async function sendWelcomeOnRegistration({ to, nombre, email, numero_identificac
   });
 
   const from = `${MAIL_FROM_NAME} <${MAIL_FROM}>`;
-  const subject = 'Bienvenido a FUNED - Credenciales de acceso';
-  const text = `Hola ${nombre || ''},\n\nTe damos la bienvenida.\n\nTus credenciales para ingresar:\n- Usuario (correo): ${email}\n- Contraseña: ${numero_identificacion}\n\nPor seguridad, te recomendamos cambiar tu contraseña después del primer ingreso.\n\nAtentamente,\nEquipo FUNED`;
+  const subject = 'Bienvenido a FUNED - Acceso y credenciales';
+  const safeEmail = String(email || '');
+  const safeCedula = String(numero_identificacion || '');
+  const accesoTexto = APP_URL ? `Ingresa al aplicativo: ${APP_URL}` : 'Ingresa al aplicativo para acceder.';
+  const accesoLink = APP_URL
+    ? `<p><a href="${APP_URL}" style="display:inline-block;padding:10px 16px;background:#0d6efd;color:#fff;text-decoration:none;border-radius:6px">Ingresar al aplicativo</a></p>`
+    : '';
+  const text = `Hola ${nombre || ''},\n\nTe damos la bienvenida.\n\nTus credenciales de acceso:\n- Usuario (correo): ${safeEmail}\n- Contraseña: ${safeCedula}\n\n${accesoTexto}\n\nPor seguridad, cambia tu contraseña tras el primer ingreso.\n\nEquipo FUNED`;
   const html = `
     <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto; line-height:1.6"> 
       <h2>Bienvenido a FUNED</h2>
       <p>Hola <strong>${nombre || ''}</strong>,</p>
       <p>Tu registro fue exitoso. Estas son tus credenciales:</p>
       <ul>
-        <li><strong>Usuario (correo):</strong> ${email}</li>
-        <li><strong>Contraseña:</strong> ${numero_identificacion}</li>
+        <li><strong>Usuario (correo):</strong> ${safeEmail || '<em>No disponible</em>'}</li>
+        <li><strong>Contraseña:</strong> ${safeCedula || '<em>No disponible</em>'}</li>
       </ul>
+      ${accesoLink}
       <p><em>Recomendación:</em> cambia tu contraseña tras el primer ingreso.</p>
       <p>Saludos,<br/>Equipo FUNED</p>
     </div>
