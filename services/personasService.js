@@ -20,16 +20,17 @@ class PersonasService {
             
         }
         }
-    static async actualizarPersona(id, nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo, rol) {
+    static async actualizarPersona(id, nombre, apellido, numero_identificacion, tipo_identificacion, fecha_nacimiento, telefono, correo, rol) {
         try {
-            const personas = await persona.findByPk(id);
-            if (!personas) {
+            const personasFound = await persona.findByPk(id);
+            if (!personasFound) {
                 throw new Error('Persona no encontrada');
             }
-            return await personas.update({ nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo, rol });
+            return await personasFound.update({ nombre, apellido, numero_identificacion, tipo_identificacion, fecha_nacimiento, telefono, correo, rol });
         } catch (error) {
             console.log("Error en servicio al actualizar persona")
             console.log(error);
+            throw error;
         }
     }
     static async eliminarPersona(id) {
