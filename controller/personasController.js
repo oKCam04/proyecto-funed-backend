@@ -48,10 +48,40 @@ class PersonasController {
 
     static async actualizarPersona(req, res) {
         const { id } = req.params;
-        const { nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo, rol } = req.body;
         try {
-            const personaActualizada = await PersonasService.actualizarPersona(id, nombre, apellido, numero_identificacion, tipo, fecha, telefono, correo, rol);
-            res.json(req.body);
+            console.log('[PersonasController] PATCH /api/personas/:id', { id, body: req.body });
+            const raw = req.body || {};
+            const nombre = raw.nombre;
+            const apellido = raw.apellido;
+            const numero_identificacion = raw.numero_identificacion;
+            // Normaliza nombres esperados: acepta tanto tipo_identificacion/fecha_nacimiento como tipo/fecha
+            const tipo_identificacion = raw.tipo_identificacion ?? raw.tipo;
+            const fecha_nacimiento = raw.fecha_nacimiento ?? raw.fecha;
+            const telefono = raw.telefono;
+            const correo = raw.correo;
+            const rol = raw.rol;
+
+            const personaActualizada = await PersonasService.actualizarPersona(
+                id,
+                nombre,
+                apellido,
+                numero_identificacion,
+                tipo_identificacion,
+                fecha_nacimiento,
+                telefono,
+                correo,
+                rol
+            );
+            // Si se envió correo en el payload, propagar al/los usuarios vinculados
+            try {
+                if (correo) {
+                    await UsuarioService.updateEmailByPersonaId(Number(id), correo);
+                }
+            } catch (err) {
+                console.log('[PersonasController] Aviso: no se pudo propagar correo a usuario:', err?.message);
+                // No bloquea la actualización de persona
+            }
+            res.json(personaActualizada);
         } catch (error) {
             res.json({ message: "Error al actualizar persona" });
         }
