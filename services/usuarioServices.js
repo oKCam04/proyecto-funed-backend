@@ -37,6 +37,21 @@ class UsuarioService{
         }
     }
 
+    // Actualiza el email de todos los usuarios vinculados a una persona
+    static async updateEmailByPersonaId(id_persona, email){
+        try{
+            if (!id_persona || !email) return [];
+            const users = await usuario.findAll({ where: { id_persona } });
+            const results = [];
+            for (const u of users) {
+                results.push(await u.update({ email }));
+            }
+            return results;
+        }catch(error){
+            throw new Error("Error al actualizar email de usuario por persona: "+error.message)
+        }
+    }
+
 }
 
 module.exports = UsuarioService;

@@ -72,6 +72,15 @@ class PersonasController {
                 correo,
                 rol
             );
+            // Si se envió correo en el payload, propagar al/los usuarios vinculados
+            try {
+                if (correo) {
+                    await UsuarioService.updateEmailByPersonaId(Number(id), correo);
+                }
+            } catch (err) {
+                console.log('[PersonasController] Aviso: no se pudo propagar correo a usuario:', err?.message);
+                // No bloquea la actualización de persona
+            }
             res.json(personaActualizada);
         } catch (error) {
             res.json({ message: "Error al actualizar persona" });
