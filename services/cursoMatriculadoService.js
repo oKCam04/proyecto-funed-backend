@@ -1,4 +1,5 @@
 const {cursomatriculado}= require('../models');
+const CalificacionesService = require('./calificacionesService');
 
 class MatricularCursoService {
     static async listarMatriculas() {
@@ -17,18 +18,31 @@ class MatricularCursoService {
         }
     }
 
-    static async actualizarMatricula(id, data) {
+  static async actualizarMatricula(id, data) {
+    try {
+      const matricula = await cursomatriculado.findByPk(id);
+      if (!matricula) {
+        throw new Error("Matrícula no encontrada");
+      }
+      const prevEstado = matricula.estado;
+      // No mapping needed, controller now sends snake_case keys in the data object
+      const updated = await matricula.update(data);
+
+      // Si cambia a Activo, crear notas pendientes para módulos de la oferta
+      if (data && data.estado === 'Activo' && prevEstado !== 'Activo') {
         try {
-            const matricula = await cursomatriculado.findByPk(id);
-            if (!matricula) {
-                throw new Error("Matrícula no encontrada");
-            }
-            // No mapping needed, controller now sends snake_case keys in the data object
-            return await matricula.update(data);
-        } catch (error) {
-            throw new Error("Error al actualizar matrícula: " + error.message);
+          await CalificacionesService.crearNotasPendientesParaMatricula(updated.id);
+        } catch (e) {
+          // No interrumpir la actualización por fallo en notas; solo registrar
+          console.log('Aviso: creación de notas pendientes falló:', e.message);
         }
+      }
+
+      return updated;
+    } catch (error) {
+      throw new Error("Error al actualizar matrícula: " + error.message);
     }
+  }
 
     static async eliminarMatricula(id) {
         try {
