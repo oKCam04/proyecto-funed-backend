@@ -19,6 +19,16 @@ class CertificadoService {
         }
     }
 
+    // Versión con nombres snake_case alineados al modelo
+    static async CreateSnake(id_curso_matriculado, fecha_emision, url_certificado) {
+        try {
+            return await certificado.create({ id_curso_matriculado, fecha_emision, url_certificado });
+        } catch (error) {
+            console.log("Error en servicio al crear certificado (snake):", error.message);
+            throw error;
+        }
+    }
+
     static async Update(id, id_curso_matriculado, fecha_emision, url_certificado) {
         try {
             const cert = await certificado.findByPk(id);
