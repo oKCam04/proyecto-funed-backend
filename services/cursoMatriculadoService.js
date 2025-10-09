@@ -189,6 +189,66 @@ class MatricularCursoService {
       throw new Error('Error al listar personas activas por oferta: ' + error.message);
     }
   }
+
+  // Auto-aprueba matrículas de ofertas cuyo fin ya pasó si todos los módulos están aprobados
+  static async autoAprobarCursosFinalizados() {
+    try {
+      const { ofertacurso, modulodocente, notas_modulo, cursomatriculado, Sequelize } = require('../models');
+      const Op = Sequelize.Op;
+      const ahora = new Date();
+
+      // Ofertas cuya fecha fin ya pasó
+      const ofertas = await ofertacurso.findAll({
+        where: { fecha_fin_curso: { [Op.lte]: ahora } },
+        attributes: ['id']
+      });
+      const idsOferta = ofertas.map(o => o.id);
+      if (!idsOferta.length) return { procesadas: 0, aprobadas: 0 };
+
+      let procesadas = 0;
+      let aprobadas = 0;
+
+      for (const idOferta of idsOferta) {
+        // Módulos vinculados a la oferta
+        const mods = await modulodocente.findAll({
+          where: { id_oferta_curso: idOferta },
+          attributes: ['id_modulo']
+        });
+        const moduloIds = Array.from(new Set((mods || []).map(m => m.id_modulo).filter(Boolean)));
+        if (!moduloIds.length) continue; // sin módulos, no hay criterio
+
+        // Matrículas pendientes de resultado para esta oferta
+        const mats = await cursomatriculado.findAll({
+          where: { id_curso_oferta: idOferta, resultado: 'Pendiente' },
+          attributes: ['id']
+        });
+
+        for (const m of mats) {
+          procesadas++;
+          // Conteo de notas aprobadas por módulo requeridos
+          const countAprobadas = await notas_modulo.count({
+            where: {
+              id_curso_matriculado: m.id,
+              id_modulo: { [Op.in]: moduloIds },
+              estado: 'Aprobó'
+            }
+          });
+
+          if (countAprobadas >= moduloIds.length) {
+            await cursomatriculado.update(
+              { resultado: 'Aprobado' },
+              { where: { id: m.id } }
+            );
+            aprobadas++;
+          }
+        }
+      }
+
+      return { procesadas, aprobadas };
+    } catch (error) {
+      throw new Error('Error en autoAprobarCursosFinalizados: ' + error.message);
+    }
+  }
 }
 
 module.exports = MatricularCursoService;
