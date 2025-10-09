@@ -1,4 +1,5 @@
 const { modulodocente, modulo, docente, persona } = require('../models');
+const CalificacionesService = require('./calificacionesService');
 
 class ModuloDocenteService {
   static async listarPorOfertaCurso(id_oferta_curso) {
@@ -41,6 +42,7 @@ class ModuloDocenteService {
 
   static async crearAsignacion({ id_modulo, id_docente, id_oferta_curso }) {
     try {
+      console.log('[ModuloDocenteService] crearAsignacion inicio', { id_modulo, id_docente, id_oferta_curso });
       // Crear registro
       const created = await modulodocente.create({
         id_modulo,
@@ -63,6 +65,17 @@ class ModuloDocenteService {
         ]
       });
 
+      // Crear notas 'Pendiente' para todos los matriculados activos de la oferta
+      let notasResumen = { creadas: 0, totalMatriculas: 0 };
+      try {
+        notasResumen = await CalificacionesService.crearNotasMasivasPorModuloOferta(id_modulo, id_oferta_curso);
+        console.log('[ModuloDocenteService] crearNotasMasivasPorModuloOferta resumen', notasResumen);
+      } catch (e) {
+        // No romper la creación de asignación si falla la creación masiva; se informa de todas formas
+        notasResumen = { error: e.message };
+        console.log('[ModuloDocenteService] crearNotasMasivasPorModuloOferta error', e?.message || e);
+      }
+
       return {
         id: r.id,
         id_oferta_curso: r.id_oferta_curso,
@@ -77,9 +90,11 @@ class ModuloDocenteService {
                 : null
             }
           : null,
-        docenteNombre: r.docente?.persona ? `${r.docente.persona.nombre} ${r.docente.persona.apellido}` : null
+        docenteNombre: r.docente?.persona ? `${r.docente.persona.nombre} ${r.docente.persona.apellido}` : null,
+        notasResumen
       };
     } catch (error) {
+      console.log('[ModuloDocenteService] crearAsignacion error', error?.message || error);
       throw new Error('Error al crear asignación módulo-docente: ' + error.message);
     }
   }

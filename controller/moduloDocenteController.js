@@ -13,11 +13,13 @@ class ModuloDocenteController {
 
   static async crearAsignacion(req, res) {
     try {
+      console.log('[ModuloDocente] POST /modulo-docente crearAsignacion body:', req.body);
       const { id_modulo, id_docente, id_oferta_curso } = req.body;
       if (!id_modulo || !id_docente || !id_oferta_curso) {
         return res.status(400).json({ mensaje: 'id_modulo, id_docente e id_oferta_curso son requeridos' });
       }
       const asignacion = await ModuloDocenteService.crearAsignacion({ id_modulo, id_docente, id_oferta_curso });
+      console.log('[ModuloDocente] Asignación creada:', asignacion?.id, 'oferta:', asignacion?.id_oferta_curso, 'modulo:', asignacion?.id_modulo, 'docente:', asignacion?.id_docente, 'notasResumen:', asignacion?.notasResumen);
       return res.status(201).json({ mensaje: 'Asignación creada', asignacion });
     } catch (error) {
       return res.status(500).json({ mensaje: 'Error al crear asignación módulo-docente', error: error.message });
