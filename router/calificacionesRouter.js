@@ -15,6 +15,8 @@ router.get('/notas-modulo/modulo/:id_modulo/oferta/:id_oferta_curso', Calificaci
 
 // Listar notas por estudiante y oferta (evitar conflicto con /:id)
 router.get('/notas-modulo/persona/:id_persona/oferta/:id_oferta_curso', CalificacionesController.obtenerNotasPorEstudianteOferta);
+// Alias para compatibilidad con frontend actual
+router.get('/notas-modulo/:id_persona/:id_oferta_curso', CalificacionesController.obtenerNotasPorEstudianteOferta);
 
 // Obtener nota por id
 router.get('/notas-modulo/:id', CalificacionesController.obtenerNotaPorId);
