@@ -10,4 +10,7 @@ router.get("/user", UsuarioController.getAll);
 
 router.patch("/user/:id", UsuarioController.actualizarUsuario);
 
+// Recuperación de contraseña
+router.post("/forgot-password", UsuarioController.forgotPassword);
+
 module.exports = router;

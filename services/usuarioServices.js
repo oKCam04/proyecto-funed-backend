@@ -37,6 +37,17 @@ class UsuarioService{
         }
     }
 
+    // Actualiza la contraseña (hasheada) de un usuario localizado por email
+    static async updatePasswordByEmail(email, password){
+        try{
+            const user = await usuario.findOne({ where: { email } });
+            if(!user) throw new Error("usuario no encontrado");
+            const hashed = await bcrypt.hash(password, 10);
+            return await user.update({ password: hashed });
+        }catch(error){
+            throw new Error("Error al actualizar contraseña por email: "+error.message);
+        }
+    }
     // Actualiza el email de todos los usuarios vinculados a una persona
     static async updateEmailByPersonaId(id_persona, email){
         try{

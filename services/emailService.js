@@ -84,4 +84,37 @@ async function sendPaymentApproved({ to, nombre, curso }) {
   return { sent: true, messageId };
 }
 
-module.exports = { sendWelcomeOnRegistration, sendPaymentApproved };
+// Enviar correo con una contraseña temporal para recuperación
+async function sendTemporaryPassword({ to, nombre, tempPassword }) {
+  const subject = 'Recuperación de contraseña - FUNED';
+  const accesoTexto = APP_URL ? `Ingresa al aplicativo: ${APP_URL}` : 'Ingresa al aplicativo para iniciar sesión.';
+  const text = `Hola ${nombre || ''},\n\nRecibimos tu solicitud de recuperación de contraseña.\n\nTu contraseña temporal es: ${tempPassword}\n\n${accesoTexto}\n\nPor seguridad, cámbiala inmediatamente después de iniciar sesión.\n\nEquipo FUNED`;
+  const accesoLink = APP_URL
+    ? `<p><a href="${APP_URL}" style="display:inline-block;padding:10px 16px;background:#0d6efd;color:#fff;text-decoration:none;border-radius:6px">Ingresar al aplicativo</a></p>`
+    : '<p>Ingresa al aplicativo para iniciar sesión.</p>';
+  const html = `
+    <div style="font-family: system-ui, -apple-system, Segoe UI, Roboto; line-height:1.6"> 
+      <h2>Recuperación de contraseña</h2>
+      <p>Hola <strong>${nombre || ''}</strong>,</p>
+      <p>Tu solicitud de recuperación fue procesada. Esta es tu contraseña temporal:</p>
+      <p style="font-size:18px"><strong>${tempPassword}</strong></p>
+      ${accesoLink}
+      <p><em>Recomendación:</em> cambia tu contraseña inmediatamente después de iniciar sesión.</p>
+      <p>Saludos,<br/>Equipo FUNED</p>
+    </div>
+  `;
+
+  const msg = {
+    to,
+    from: { email: MAIL_FROM, name: MAIL_FROM_NAME },
+    subject,
+    text,
+    html,
+  };
+
+  const [response] = await sgMail.send(msg);
+  const messageId = response?.headers?.['x-message-id'] || response?.headers?.['X-Message-Id'] || null;
+  return { sent: true, messageId };
+}
+
+module.exports = { sendWelcomeOnRegistration, sendPaymentApproved, sendTemporaryPassword };
