@@ -62,3 +62,24 @@ try {
   server.keepAliveTimeout = 65000; // 65s
   server.headersTimeout = 66000;   // debe ser > keepAliveTimeout
 } catch {}
+
+// Job periódico: auto-aprobar matrículas cuando finaliza la oferta de curso
+try {
+  const MatricularCursoService = require('./services/cursoMatriculadoService');
+  const intervaloMs = Number(process.env.AUTO_APPROVE_INTERVAL_MS || 1000 * 60 * 60); // 1h por defecto
+  const ejecutarJob = async () => {
+    try {
+      const res = await MatricularCursoService.autoAprobarCursosFinalizados();
+      if (res && (res.procesadas || res.aprobadas)) {
+        console.log(`[AutoAprobación] Procesadas: ${res.procesadas}, Aprobadas: ${res.aprobadas}`);
+      }
+    } catch (e) {
+      console.warn('[AutoAprobación] Error en job:', e?.message || e);
+    }
+  };
+  // Ejecutar al inicio y luego periódicamente
+  ejecutarJob();
+  setInterval(ejecutarJob, Math.max(5_000, intervaloMs));
+} catch (e) {
+  console.warn('[AutoAprobación] No se pudo iniciar el job:', e?.message || e);
+}

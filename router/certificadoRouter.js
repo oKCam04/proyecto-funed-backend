@@ -7,6 +7,9 @@ router.get("/certificado", CertificadoController.GetAll);
 
 router.post("/certificado", aunthmiddleware, CertificadoController.Create);
 
+// Generar y descargar PDF bajo demanda
+router.post("/certificado/generar", aunthmiddleware, CertificadoController.GenerateAndDownload);
+
 router.get("/certificado/:id", aunthmiddleware, CertificadoController.GetForId);
 
 router.patch("/certificado/:id", CertificadoController.Update);
