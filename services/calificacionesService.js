@@ -5,9 +5,10 @@ class CalificacionesService {
   static toEstado(value) {
     if (!value) return value;
     const s = String(value).toLowerCase();
+    // Importante: revisar "desapr"/"desprob"/"reprob" ANTES que "aprob" para evitar falsos positivos
+    if (s === 'desaprobado' || s.includes('desapr') || s.includes('desprob') || s.includes('reprob')) return 'Desaprobó';
     if (s === 'aprobado' || s.includes('aprob')) return 'Aprobó';
-    if (s === 'desaprobado' || s.includes('desapr')) return 'Desaprobó';
-    if (s === 'pendiente') return 'Pendiente';
+    if (s === 'pendiente' || s.includes('pend')) return 'Pendiente';
     return value;
   }
 
