@@ -1,4 +1,5 @@
 const ofertaCursosService = require('../services/ofertaCursoServices');
+const docentesService = require('../services/docentesServices');
 
 class OfertaCursosController {
     static async listarOfertasCursos(req, res) {
@@ -50,6 +51,24 @@ class OfertaCursosController {
             res.status(500).json({ message: "Error al obtener oferta de curso" });
         }
     }
+
+    static async obtenerOfertasPorDocente(req, res) {
+        const { id_persona } = req.params;
+        try {
+            let docente;
+            try {
+                docente = await docentesService.obtenerDocentePorIdPersona(Number(id_persona));
+            } catch (err) {
+                // Si la persona no es docente, retornamos lista vacía
+                return res.json([]);
+            }
+            const ofertas = await ofertaCursosService.listarOfertasPorDocente(Number(docente.id));
+            res.json(ofertas);
+        } catch (error) {
+            res.status(500).json({ message: "Error al listar ofertas por docente" });
+        }
+    }
+
 }
 
 module.exports = OfertaCursosController;

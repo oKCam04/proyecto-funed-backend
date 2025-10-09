@@ -145,7 +145,50 @@ class MatricularCursoService {
       throw new Error('Error al obtener módulos del curso: ' + error.message);
     }
   }
-    
+
+  // Listar personas matriculadas activas por oferta de curso
+  static async listarPersonasActivasPorOferta(id_oferta_curso) {
+    try {
+      const { cursomatriculado, persona } = require('../models');
+      const registros = await cursomatriculado.findAll({
+        where: { id_curso_oferta: id_oferta_curso, estado: 'Activo' },
+        include: [
+          {
+            model: persona,
+            as: 'persona',
+            attributes: [
+              'id', 'nombre', 'apellido', 'numero_identificacion', 'tipo_identificacion',
+              'fecha_nacimiento', 'telefono', 'correo', 'rol'
+            ]
+          }
+        ]
+      });
+
+      // Normalizar y deduplicar por id de persona
+      const seen = new Set();
+      const personas = [];
+      for (const r of (registros || [])) {
+        const p = r.persona;
+        if (p && !seen.has(p.id)) {
+          seen.add(p.id);
+          personas.push({
+            id: p.id,
+            nombre: p.nombre,
+            apellido: p.apellido,
+            numero_identificacion: p.numero_identificacion,
+            tipo_identificacion: p.tipo_identificacion,
+            fecha_nacimiento: p.fecha_nacimiento,
+            telefono: p.telefono,
+            correo: p.correo,
+            rol: p.rol,
+          });
+        }
+      }
+      return personas;
+    } catch (error) {
+      throw new Error('Error al listar personas activas por oferta: ' + error.message);
+    }
+  }
 }
 
 module.exports = MatricularCursoService;
